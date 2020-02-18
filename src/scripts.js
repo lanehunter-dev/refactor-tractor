@@ -1,13 +1,39 @@
 import $ from 'jquery';
-import users from './data/users-data';
 import recipeData from  './data/recipe-data';
-import ingredientData from './data/ingredient-data';
+import ingredientsData from './data/ingredient-data';
 
 import './css/base.scss';
 import './css/styles.scss';
 
+import './images/apple-logo.png'
+import './images/apple-logo-outline.png'
+import './images/search.png'
+import './images/cookbook.png'
+import './images/seasoning.png'
+
 import User from './user';
 import Recipe from './recipe';
+
+let users;
+
+
+fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData')
+  .then((response) => response.json())
+  .then(data => generateUser(data))
+  .catch(error => console.log(error.message))
+
+function generateUser(data) {
+  user = new User(data.wcUsersData[Math.floor(Math.random() * data.wcUsersData.length)]);
+  let firstName = user.name.split(" ")[0];
+  let welcomeMsg = `
+    <div class="welcome-msg">
+      <h1>Welcome ${firstName}!</h1>
+    </div>`;
+  document.querySelector(".banner-image").insertAdjacentHTML("afterbegin",
+    welcomeMsg);
+  findPantryInfo();
+  console.log(user)
+}
 
 let allRecipesBtn = document.querySelector(".show-all-btn");
 let filterBtn = document.querySelector(".filter-btn");
@@ -26,6 +52,11 @@ let tagList = document.querySelector(".tag-list");
 let user;
 
 
+
+
+
+
+
 window.addEventListener("load", createCards);
 window.addEventListener("load", findTags);
 window.addEventListener("load", generateUser);
@@ -37,19 +68,6 @@ savedRecipesBtn.addEventListener("click", showSavedRecipes);
 searchBtn.addEventListener("click", searchRecipes);
 showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
 searchForm.addEventListener("submit", pressEnterSearch);
-
-// GENERATE A USER ON LOAD
-function generateUser() {
-  user = new User(users[Math.floor(Math.random() * users.length)]);
-  let firstName = user.name.split(" ")[0];
-  let welcomeMsg = `
-    <div class="welcome-msg">
-      <h1>Welcome ${firstName}!</h1>
-    </div>`;
-  document.querySelector(".banner-image").insertAdjacentHTML("afterbegin",
-    welcomeMsg);
-  findPantryInfo();
-}
 
 // CREATE RECIPE CARDS
 function createCards() {
@@ -75,7 +93,7 @@ function addToDom(recipeInfo, shortRecipeName) {
         </div>
       </div>
       <h4>${recipeInfo.tags[0]}</h4>
-      <img src="../images/apple-logo-outline.png" alt="unfilled apple icon" class="card-apple-icon">
+      <img src="../images/apple-logo-outline.png" alt="outline apple icon" class="card-apple-icon">
     </div>`
   main.insertAdjacentHTML("beforeend", cardHtml);
 }

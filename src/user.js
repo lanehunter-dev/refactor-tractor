@@ -10,7 +10,7 @@ class User {
     this.favoriteRecipes.push(recipe);
   }
 
-  removeRecipe(recipe) {
+  removeFavoriteRecipe(recipe) {
     let i = this.favoriteRecipes.indexOf(recipe);
     this.favoriteRecipes.splice(i, 1);
   }
@@ -18,11 +18,15 @@ class User {
   decideToCook(recipe) {
     this.recipesToCook.push(recipe);
   }
-  filterRecipes(type) {
+  filterFavoriteRecipes(type) {
     return this.favoriteRecipes.filter(recipe => recipe.type.includes(type));
   }
-  searchForRecipe(keyword) {
-    return this.favoriteRecipes.filter(recipe => recipe.name.includes(keyword) || recipe.ingredients.includes(keyword));
+  searchForFavoriteRecipes(keyword) {
+    return this.favoriteRecipes.filter(recipe => recipe.name.includes(keyword) ||
+    recipe.ingredients.includes(keyword));
+  }
+  searchRecipes() {
+    
   }
 }
 
