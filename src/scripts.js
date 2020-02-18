@@ -1,6 +1,4 @@
 import $ from 'jquery';
-import recipeData from  './data/recipe-data';
-import ingredientsData from './data/ingredient-data';
 
 import './css/base.scss';
 import './css/styles.scss';
@@ -13,14 +11,24 @@ import './images/seasoning.png'
 
 import User from './user';
 import Recipe from './recipe';
-
-let users;
-
-
+//users
 fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData')
   .then((response) => response.json())
   .then(data => generateUser(data))
   .catch(error => console.log(error.message))
+
+
+
+//recipes
+fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/recipes/recipeData')
+  .then((response) => response.json())
+  .then(data => {
+    createCards(data.recipeData);
+    findTags(data.recipeData);
+  })
+  .catch(error => console.log(error.message))
+
+
 
 function generateUser(data) {
   user = new User(data.wcUsersData[Math.floor(Math.random() * data.wcUsersData.length)]);
@@ -31,8 +39,7 @@ function generateUser(data) {
     </div>`;
   document.querySelector(".banner-image").insertAdjacentHTML("afterbegin",
     welcomeMsg);
-  findPantryInfo();
-  console.log(user)
+  findPantryInfo(data);
 }
 
 let allRecipesBtn = document.querySelector(".show-all-btn");
@@ -51,12 +58,6 @@ let showPantryRecipes = document.querySelector(".show-pantry-recipes-btn");
 let tagList = document.querySelector(".tag-list");
 let user;
 
-
-
-
-
-
-
 window.addEventListener("load", createCards);
 window.addEventListener("load", findTags);
 window.addEventListener("load", generateUser);
@@ -70,8 +71,8 @@ showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
 searchForm.addEventListener("submit", pressEnterSearch);
 
 // CREATE RECIPE CARDS
-function createCards() {
-  recipeData.forEach(recipe => {
+function createCards(data) {
+  data.forEach(recipe => {
     let recipeInfo = new Recipe(recipe);
     let shortRecipeName = recipeInfo.name;
     recipes.push(recipeInfo);
@@ -99,9 +100,9 @@ function addToDom(recipeInfo, shortRecipeName) {
 }
 
 // FILTER BY RECIPE TAGS
-function findTags() {
+function findTags(data) {
   let tags = [];
-  recipeData.forEach(recipe => {
+  data.recipeData.forEach(recipe => {
     recipe.tags.forEach(tag => {
       if (!tags.includes(tag)) {
         tags.push(tag);
@@ -251,7 +252,7 @@ function generateInstructions(recipe) {
 
 function exitRecipe() {
   while (fullRecipeInfo.firstChild &&
-    fullRecipeInfo.removeChild(fullRecipeInfo.firstChild));
+    fullRecipeInfo.removeChild(fullRecipeInfo.firstChild)) {}
   fullRecipeInfo.style.display = "none";
   document.getElementById("overlay").remove();
 }
@@ -313,23 +314,30 @@ function showAllRecipes() {
 }
 
 // CREATE AND USE PANTRY
-function findPantryInfo() {
-  user.pantry.forEach(item => {
-    let itemInfo = ingredientsData.find(ingredient => {
-      return ingredient.id === item.ingredient;
-    });
-    let originalIngredient = pantryInfo.find(ingredient => {
-      if (itemInfo) {
-        return ingredient.name === itemInfo.name;
-      }
-    });
-    if (itemInfo && originalIngredient) {
-      originalIngredient.count += item.amount;
-    } else if (itemInfo) {
-      pantryInfo.push({name: itemInfo.name, count: item.amount});
-    }
-  });
-  displayPantryInfo(pantryInfo.sort((a, b) => a.name.localeCompare(b.name)));
+function findPantryInfo(data) {
+  //ingredients
+  fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/ingredients/ingredientsData')
+    .then((response) => response.json())
+    .then(data => {
+      user.pantry.forEach(item => {
+        let itemInfo = data.ingredientsData.find(ingredient => {
+          return ingredient.id === item.ingredient;
+        });
+        // console.log(itemInfo)
+        let originalIngredient = pantryInfo.find(ingredient => {
+          if (itemInfo) {
+            return ingredient.name === itemInfo.name;
+          }
+        });
+        if (itemInfo && originalIngredient) {
+          originalIngredient.count += item.amount;
+        } else if (itemInfo) {
+          pantryInfo.push({name: itemInfo.name, count: item.amount});
+        }
+      });
+      displayPantryInfo(pantryInfo.sort((a, b) => a.name.localeCompare(b.name)))
+    })
+    .catch(error => console.log(error.message))
 }
 
 function displayPantryInfo(pantry) {
