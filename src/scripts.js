@@ -11,26 +11,39 @@ import './images/seasoning.png'
 
 import User from './user';
 import Recipe from './recipe';
+import fetchData from './index'
 
-//users
-fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData')
-  .then((response) => response.json())
-  .then(data => generateUser(data))
-  .catch(error => console.log(error.message))
+let userData;
+let recipeData;
+let ingredientsData;
 
-//recipes
-fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/recipes/recipeData')
-  .then((response) => response.json())
-  .then(data => {
-    createCards(data.recipeData);
-    findTags(data.recipeData);
+const loadPageHandler = () => {
+  generateUser(userData);
+  createCards(recipeData);
+  findTags(recipeData)
+}
+
+fetchData().then(data => {
+    userData = data.userData;
+    recipeData = data.recipeData;
+    ingredientsData = data.ingredientsData;
   })
+  .then(loadPageHandler)
   .catch(error => console.log(error.message))
 
 
+// const wait = async () => {
+//   let response = fetchData();
+//   await response.then(data => {
+//     userData = data.userData;
+//     recipeData = data.recipeData;
+//     ingredientsData = data.ingredientsData;
+//   });
+// }
+// wait()
 
 function generateUser(data) {
-  user = new User(data.wcUsersData[Math.floor(Math.random() * data.wcUsersData.length)]);
+  user = new User(data[Math.floor(Math.random() * data.length)]);
   let firstName = user.name.split(" ")[0];
   let welcomeMsg = `
     <div class="welcome-msg">
@@ -208,25 +221,23 @@ function showSavedRecipes() {
 function openRecipeInfo(event) {
   fullRecipeInfo.style.display = "inline";
   let recipeId = event.path.find(e => e.id).id;
-  fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/recipes/recipeData')
-    .then((response) => response.json())
-    .then(data => {
-      let recipe = data.recipeData.find(recipe => recipe.id === Number(recipeId))
-      console.log(recipe.ingredients)
-      generateRecipeTitle(recipe, recipe.ingredients);
-      addRecipeImage(recipe);
-      generateInstructions(recipe);
-      fullRecipeInfo.insertAdjacentHTML("beforebegin", "<section id='overlay'></div>");
-    })
-    .catch(error => console.log(error.message))
+  let recipe = recipeData.find(recipe => recipe.id === Number(recipeId))
+  generateRecipeTitle(recipe, recipe.ingredients);
+  addRecipeImage(recipe);
+  generateInstructions(recipe);
+  fullRecipeInfo.insertAdjacentHTML("beforebegin", "<section id='overlay'></div>");
 }
 
 function generateRecipeTitle(recipe, ingredients) {
+  let recipeIngredients = ingredients.map(item => {
+    return ingredientsData.find(ingredient => ingredient.id === item.id)
+  }).map(item => item.name)
+  console.log(recipeIngredients);
   let recipeTitle = `
     <button id="exit-recipe-btn">X</button>
     <h3 id="recipe-title">${recipe.name}</h3>
     <h4>Ingredients</h4>
-    <p>${ingredients}</p>`
+    <p>${recipeIngredients.toString().split(',').join(', ')}</p>`
   fullRecipeInfo.insertAdjacentHTML("beforeend", recipeTitle);
 }
 
