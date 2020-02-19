@@ -11,13 +11,12 @@ import './images/seasoning.png'
 
 import User from './user';
 import Recipe from './recipe';
+
 //users
 fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData')
   .then((response) => response.json())
   .then(data => generateUser(data))
   .catch(error => console.log(error.message))
-
-
 
 //recipes
 fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/recipes/recipeData')
@@ -323,7 +322,6 @@ function findPantryInfo(data) {
         let itemInfo = data.ingredientsData.find(ingredient => {
           return ingredient.id === item.ingredient;
         });
-        // console.log(itemInfo)
         let originalIngredient = pantryInfo.find(ingredient => {
           if (itemInfo) {
             return ingredient.name === itemInfo.name;
