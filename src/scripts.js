@@ -2,6 +2,7 @@ import $ from 'jquery';
 import users from './data/users-data';
 import recipeData from  './data/recipe-data';
 import ingredientData from './data/ingredient-data';
+import domUpdates from './domUpdates.js'
 
 import './css/base.scss';
 import './css/styles.scss';
@@ -22,7 +23,6 @@ let searchBtn = document.querySelector(".search-btn");
 let searchForm = document.querySelector("#search");
 let searchInput = document.querySelector("#search-input");
 let showPantryRecipes = document.querySelector(".show-pantry-recipes-btn");
-let tagList = document.querySelector(".tag-list");
 let user;
 
 
@@ -42,12 +42,7 @@ searchForm.addEventListener("submit", pressEnterSearch);
 function generateUser() {
   user = new User(users[Math.floor(Math.random() * users.length)]);
   let firstName = user.name.split(" ")[0];
-  let welcomeMsg = `
-    <div class="welcome-msg">
-      <h1>Welcome ${firstName}!</h1>
-    </div>`;
-  document.querySelector(".banner-image").insertAdjacentHTML("afterbegin",
-    welcomeMsg);
+  domUpdates.welcomeMessage(firstName);
   findPantryInfo();
 }
 
@@ -60,24 +55,8 @@ function createCards() {
     if (recipeInfo.name.length > 40) {
       shortRecipeName = recipeInfo.name.substring(0, 40) + "...";
     }
-    addToDom(recipeInfo, shortRecipeName)
+    domUpdates.makeCard(recipeInfo, shortRecipeName)
   });
-}
-
-function addToDom(recipeInfo, shortRecipeName) {
-  let cardHtml = `
-    <div class="recipe-card" id=${recipeInfo.id}>
-      <h3 maxlength="40">${shortRecipeName}</h3>
-      <div class="card-photo-container">
-        <img src=${recipeInfo.image} class="card-photo-preview" alt="${recipeInfo.name} recipe" title="${recipeInfo.name} recipe">
-        <div class="text">
-          <div>Click for Instructions</div>
-        </div>
-      </div>
-      <h4>${recipeInfo.tags[0]}</h4>
-      <img src="../images/apple-logo-outline.png" alt="unfilled apple icon" class="card-apple-icon">
-    </div>`
-  main.insertAdjacentHTML("beforeend", cardHtml);
 }
 
 // FILTER BY RECIPE TAGS
@@ -91,15 +70,7 @@ function findTags() {
     });
   });
   tags.sort();
-  listTags(tags);
-}
-
-function listTags(allTags) {
-  allTags.forEach(tag => {
-    let tagHtml = `<li><input type="checkbox" class="checked-tag" id="${tag}">
-      <label for="${tag}">${capitalize(tag)}</label></li>`;
-    tagList.insertAdjacentHTML("beforeend", tagHtml);
-  });
+  tags.forEach(tag => domUpdates.listTag(tag));
 }
 
 function capitalize(words) {
@@ -194,19 +165,10 @@ function openRecipeInfo(event) {
   fullRecipeInfo.style.display = "inline";
   let recipeId = event.path.find(e => e.id).id;
   let recipe = recipeData.find(recipe => recipe.id === Number(recipeId));
-  generateRecipeTitle(recipe, generateIngredients(recipe));
+  domUpdates.makeRecipeTitle(recipe, generateIngredients(recipe));
   addRecipeImage(recipe);
   generateInstructions(recipe);
   fullRecipeInfo.insertAdjacentHTML("beforebegin", "<section id='overlay'></div>");
-}
-
-function generateRecipeTitle(recipe, ingredients) {
-  let recipeTitle = `
-    <button id="exit-recipe-btn">X</button>
-    <h3 id="recipe-title">${recipe.name}</h3>
-    <h4>Ingredients</h4>
-    <p>${ingredients}</p>`
-  fullRecipeInfo.insertAdjacentHTML("beforeend", recipeTitle);
 }
 
 function addRecipeImage(recipe) {
@@ -311,16 +273,8 @@ function findPantryInfo() {
       pantryInfo.push({name: itemInfo.name, count: item.amount});
     }
   });
-  displayPantryInfo(pantryInfo.sort((a, b) => a.name.localeCompare(b.name)));
-}
-
-function displayPantryInfo(pantry) {
-  pantry.forEach(ingredient => {
-    let ingredientHtml = `<li><input type="checkbox" class="pantry-checkbox" id="${ingredient.name}">
-      <label for="${ingredient.name}">${ingredient.name}, ${ingredient.count}</label></li>`;
-    document.querySelector(".pantry-list").insertAdjacentHTML("beforeend",
-      ingredientHtml);
-  });
+  let sortedPantry = pantryInfo.sort((a, b) => a.name.localeCompare(b.name));
+  sortedPantry.forEach(ingredient => domUpdates.displayPantryInfo(ingredient))
 }
 
 function findCheckedPantryBoxes() {
