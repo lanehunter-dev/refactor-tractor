@@ -208,11 +208,17 @@ function showSavedRecipes() {
 function openRecipeInfo(event) {
   fullRecipeInfo.style.display = "inline";
   let recipeId = event.path.find(e => e.id).id;
-  let recipe = recipeData.find(recipe => recipe.id === Number(recipeId));
-  generateRecipeTitle(recipe, generateIngredients(recipe));
-  addRecipeImage(recipe);
-  generateInstructions(recipe);
-  fullRecipeInfo.insertAdjacentHTML("beforebegin", "<section id='overlay'></div>");
+  fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/recipes/recipeData')
+    .then((response) => response.json())
+    .then(data => {
+      let recipe = data.recipeData.find(recipe => recipe.id === Number(recipeId))
+      console.log(recipe.ingredients)
+      generateRecipeTitle(recipe, recipe.ingredients);
+      addRecipeImage(recipe);
+      generateInstructions(recipe);
+      fullRecipeInfo.insertAdjacentHTML("beforebegin", "<section id='overlay'></div>");
+    })
+    .catch(error => console.log(error.message))
 }
 
 function generateRecipeTitle(recipe, ingredients) {
