@@ -3,7 +3,7 @@ import $ from 'jquery'
 const domUpdates = {
 
   welcomeMessage: function(firstName) {
-    $(".banner-image").insertAdjacentHTML('afterbegin', `
+    $(".banner-image").prepend(`
       <div class="welcome-msg">
         <h1>Welcome ${firstName}!</h1>
       </div>
@@ -11,7 +11,7 @@ const domUpdates = {
   },
 
   makeCard: function(recipeInfo, shortRecipeName) {
-    $('main').insertAdjacentHTML("beforeend", `
+    $('main').append(`
       <div class="recipe-card" id=${recipeInfo.id}>
         <h3 maxlength="40">${shortRecipeName}</h3>
         <div class="card-photo-container">
@@ -26,28 +26,30 @@ const domUpdates = {
     `)
   },
 
-  listTag: function(tag) {
-    $(".tag-list").insertAdjacentHTML("beforeend", `
+  listTag: function(cap, tag) {
+    $(".tag-list").append(`
       <li><input type="checkbox" class="checked-tag" id="${tag}">
-      <label for="${tag}">${capitalize(tag)}</label></li>
+      <label for="${tag}">${cap}</label></li>
     `)
   },
 
   displayPantryInfo: function(ingredient) {
-    $(".pantry-list").insertAdjacentHTML("beforeend", `
+    $(".pantry-list").append(`
       <li><input type="checkbox" class="pantry-checkbox" id="${ingredient.name}">
       <label for="${ingredient.name}">${ingredient.name}, ${ingredient.count}</label></li>
     `)
   },
 
   makeRecipeTitle: function(recipe, ingredients) {
-    $(".recipe-instructions").insertAdjacentHTML("beforeend", `
+    $(".recipe-instructions").append(`
       <button id="exit-recipe-btn">X</button>
       <h3 id="recipe-title">${recipe.name}</h3>
       <h4>Ingredients</h4>
       <p>${ingredients}</p>
     `)
-  }
+  },
+
+
 }
 
 export default domUpdates;

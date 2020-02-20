@@ -1,7 +1,11 @@
 import { expect } from 'chai';
 
 import User from '../src/user';
+<<<<<<< HEAD
 import users from '../src/data/users-data';
+=======
+import userData from '../src/data/users-data';
+>>>>>>> 0787d29bda0b359a304e043c74236d67bbeaf0e8
 
 describe('User', function() {
   let user;
@@ -9,7 +13,11 @@ describe('User', function() {
   let recipe;
 
   beforeEach(function() {
+<<<<<<< HEAD
     userInfo = users[0];
+=======
+    userInfo = userData[0];
+>>>>>>> 0787d29bda0b359a304e043c74236d67bbeaf0e8
     user = new User(userInfo)
 
     recipe = {name: 'Chicken Parm', type: ['italian', 'dinner']};
