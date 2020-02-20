@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import domUpdates from './domUpdates.js'
 
 import './css/base.scss';
 import './css/styles.scss';
@@ -45,12 +46,7 @@ fetchData().then(data => {
 function generateUser(data) {
   user = new User(data[Math.floor(Math.random() * data.length)]);
   let firstName = user.name.split(" ")[0];
-  let welcomeMsg = `
-    <div class="welcome-msg">
-      <h1>Welcome ${firstName}!</h1>
-    </div>`;
-  document.querySelector(".banner-image").insertAdjacentHTML("afterbegin",
-    welcomeMsg);
+  domUpdates.welcomeMessage(firstName);
   findPantryInfo(data);
 }
 
@@ -67,7 +63,6 @@ let searchBtn = document.querySelector(".search-btn");
 let searchForm = document.querySelector("#search");
 let searchInput = document.querySelector("#search-input");
 let showPantryRecipes = document.querySelector(".show-pantry-recipes-btn");
-let tagList = document.querySelector(".tag-list");
 let user;
 
 allRecipesBtn.addEventListener("click", showAllRecipes);
@@ -88,24 +83,8 @@ function createCards(data) {
     if (recipeInfo.name.length > 40) {
       shortRecipeName = recipeInfo.name.substring(0, 40) + "...";
     }
-    addToDom(recipeInfo, shortRecipeName)
+    domUpdates.makeCard(recipeInfo, shortRecipeName)
   });
-}
-
-function addToDom(recipeInfo, shortRecipeName) {
-  let cardHtml = `
-    <div class="recipe-card" id=${recipeInfo.id}>
-      <h3 maxlength="40">${shortRecipeName}</h3>
-      <div class="card-photo-container">
-        <img src=${recipeInfo.image} class="card-photo-preview" alt="${recipeInfo.name} recipe" title="${recipeInfo.name} recipe">
-        <div class="text">
-          <div>Click for Instructions</div>
-        </div>
-      </div>
-      <h4>${recipeInfo.tags[0]}</h4>
-      <img src="../images/apple-logo-outline.png" alt="outline apple icon" class="card-apple-icon">
-    </div>`
-  main.insertAdjacentHTML("beforeend", cardHtml);
 }
 
 // FILTER BY RECIPE TAGS
@@ -119,15 +98,7 @@ function findTags(data) {
     });
   });
   tags.sort();
-  listTags(tags);
-}
-
-function listTags(allTags) {
-  allTags.forEach(tag => {
-    let tagHtml = `<li><input type="checkbox" class="checked-tag" id="${tag}">
-      <label for="${tag}">${capitalize(tag)}</label></li>`;
-    tagList.insertAdjacentHTML("beforeend", tagHtml);
-  });
+  tags.forEach(tag => domUpdates.listTag(capitalize(tag), tag));
 }
 
 function capitalize(words) {
@@ -221,24 +192,11 @@ function showSavedRecipes() {
 function openRecipeInfo(event) {
   fullRecipeInfo.style.display = "inline";
   let recipeId = event.path.find(e => e.id).id;
-  let recipe = recipeData.find(recipe => recipe.id === Number(recipeId))
-  generateRecipeTitle(recipe, recipe.ingredients);
+  let recipe = recipeData.find(recipe => recipe.id === Number(recipeId));
+  domUpdates.makeRecipeTitle(recipe, recipe.ingredients);
   addRecipeImage(recipe);
   generateInstructions(recipe);
   fullRecipeInfo.insertAdjacentHTML("beforebegin", "<section id='overlay'></div>");
-}
-
-function generateRecipeTitle(recipe, ingredients) {
-  let recipeIngredients = ingredients.map(item => {
-    return ingredientsData.find(ingredient => ingredient.id === item.id)
-  }).map(item => item.name)
-  console.log(recipeIngredients);
-  let recipeTitle = `
-    <button id="exit-recipe-btn">X</button>
-    <h3 id="recipe-title">${recipe.name}</h3>
-    <h4>Ingredients</h4>
-    <p>${recipeIngredients.toString().split(',').join(', ')}</p>`
-  fullRecipeInfo.insertAdjacentHTML("beforeend", recipeTitle);
 }
 
 function addRecipeImage(recipe) {
@@ -327,38 +285,24 @@ function showAllRecipes() {
 }
 
 // CREATE AND USE PANTRY
-function findPantryInfo(data) {
-  //ingredients
-  fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/ingredients/ingredientsData')
-    .then((response) => response.json())
-    .then(data => {
-      user.pantry.forEach(item => {
-        let itemInfo = data.ingredientsData.find(ingredient => {
-          return ingredient.id === item.ingredient;
-        });
-        let originalIngredient = pantryInfo.find(ingredient => {
-          if (itemInfo) {
-            return ingredient.name === itemInfo.name;
-          }
-        });
-        if (itemInfo && originalIngredient) {
-          originalIngredient.count += item.amount;
-        } else if (itemInfo) {
-          pantryInfo.push({name: itemInfo.name, count: item.amount});
-        }
-      });
-      displayPantryInfo(pantryInfo.sort((a, b) => a.name.localeCompare(b.name)))
-    })
-    .catch(error => console.log(error.message))
-}
-
-function displayPantryInfo(pantry) {
-  pantry.forEach(ingredient => {
-    let ingredientHtml = `<li><input type="checkbox" class="pantry-checkbox" id="${ingredient.name}">
-      <label for="${ingredient.name}">${ingredient.name}, ${ingredient.count}</label></li>`;
-    document.querySelector(".pantry-list").insertAdjacentHTML("beforeend",
-      ingredientHtml);
+function findPantryInfo() {
+  user.pantry.forEach(item => {
+    let itemInfo = ingredientsData.find(ingredient => {
+      return ingredient.id === item.ingredient;
+    });
+    let originalIngredient = pantryInfo.find(ingredient => {
+      if (itemInfo) {
+        return ingredient.name === itemInfo.name;
+      }
+    });
+    if (itemInfo && originalIngredient) {
+      originalIngredient.count += item.amount;
+    } else if (itemInfo) {
+      pantryInfo.push({name: itemInfo.name, count: item.amount});
+    }
   });
+  let sortedPantry = pantryInfo.sort((a, b) => a.name.localeCompare(b.name));
+  sortedPantry.forEach(ingredient => domUpdates.displayPantryInfo(ingredient))
 }
 
 function findCheckedPantryBoxes() {
@@ -378,7 +322,7 @@ function findRecipesWithCheckedIngredients(selected) {
   let ingredientNames = selected.map(item => {
     return item.id;
   })
-  recipes.forEach(recipe => {
+  recipeData.forEach(recipe => {
     let allRecipeIngredients = [];
     recipe.ingredients.forEach(ingredient => {
       allRecipeIngredients.push(ingredient.name);
