@@ -28,6 +28,14 @@ describe('Pantry', function() {
     expect(pantry).to.be.an.instanceof(Pantry);
   });
 
+  it('should be able to have a pantry of ingredients', function() {
+    expect(pantry.inventory[0]).to.deep.equal({"ingredient": 11477, "amount": 1})
+  })
+
+  it('should be able to determine if the recipe can be made', function() {
+    expect(pantry.checkStockForRecipe(recipe)).to.equal(false)
+  })
+
 
 
 })
