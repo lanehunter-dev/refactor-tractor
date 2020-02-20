@@ -17,7 +17,7 @@ describe('Pantry', function() {
     ingredients = ingredientsData;
     user = new User(users[0]);
     pantry = new Pantry(users[0].pantry);
-    recipe = new Recipe(recipeData[1]);
+    recipe = new Recipe(recipeData[0]);
   })
 
   it('is a function', function() {
@@ -33,8 +33,12 @@ describe('Pantry', function() {
   })
 
   it('should be able to determine if the recipe can be made', function() {
-    console.log(pantry.checkStockForRecipe(recipe))
     expect(pantry.checkStockForRecipe(recipe)).to.equal(true)
+  })
+
+  it('should be able to determine if the recipe2 can be made', function() {
+    recipe = new Recipe(recipeData[1]);
+    expect(pantry.checkStockForRecipe(recipe)).to.equal(false)
   })
 
 

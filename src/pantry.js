@@ -15,7 +15,7 @@ class Pantry {
       return ingredient.ingredient
     })
 
-    return recipeItems.reduce((acc, recipeItem) => {
+    let subtractedData = recipeItems.reduce((acc, recipeItem) => {
       if (!pantryIds.includes(recipeItem.id)) {
         acc.push({
           name: recipeItem.name,
@@ -32,6 +32,15 @@ class Pantry {
       })
       return acc
     }, [])
+
+    console.log(subtractedData)
+
+    let amountRemaining = subtractedData.map(dataItem => {
+      return dataItem.subtractedAmount < 0 ? false : true
+    })
+    console.log(amountRemaining)
+
+    return amountRemaining.includes(false) ? false : true;
   }
 }
 
