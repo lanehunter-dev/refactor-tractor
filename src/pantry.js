@@ -4,15 +4,43 @@ class Pantry {
   }
 
   checkStockForRecipe(recipe) {
-    let inventoryIds = this.inventory.map(item => {
-      return item.ingredient
+    let recipeItems = recipe.ingredients.map(ingredient => {
+      return {
+        name: ingredient.name,
+        id: ingredient.id,
+        amount: ingredient.quantity.amount
+      }
     })
-    let trueCheck = recipe.ingredients.map(ingredient => {
-      return inventoryIds.includes(ingredient.id) ? true : false;
-    })
-    return trueCheck.includes(false) ? false : true;
+
+    return recipeItems.reduce((acc, recipeItem) => {
+      this.inventory.forEach(ingredient => {
+        if (recipeItem.id === ingredient.ingredient) {
+          acc.push({
+            name: recipeItem.name,
+            subtractedAmount: ingredient.amount - recipeItem.amount
+          });
+        }
+        if (!this.inventory.includes(recipeItem.id)) {
+          // console.log('test')
+          acc.push({
+            name: recipeItem.name,
+            subtractedAmount: 0
+          })
+        }
+      })
+      return acc
+    }, [])
   }
 }
+
+
+
+// getNeededIngredientsInfo(recipe) {
+//   let inventoryIds = this.inventory.map(item => {
+//     return item.ingredient
+//   })
+// }
+
 
 
 module.exports = Pantry

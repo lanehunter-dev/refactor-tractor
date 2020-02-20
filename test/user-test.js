@@ -24,11 +24,11 @@ describe('User', function() {
   });
 
   it('should initialize with a name', function() {
-    expect(user.name).to.eq('Saige O\'Kon');
+    expect(user.name).to.eq('Rocky Padberg');
   });
 
   it('should initialize with a pantry', function() {
-    expect(user.pantry[0].ingredient).to.eq(11477);
+    expect(user.pantry[0].ingredient).to.eq(20081);
   });
 
   it('should initialize with an empty favoriteRecipes array', function() {
