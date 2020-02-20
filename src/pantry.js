@@ -12,20 +12,23 @@ class Pantry {
       }
     })
 
+    let pantryIds = this.inventory.map(ingredient => {
+      return ingredient.ingredient
+    })
+
     return recipeItems.reduce((acc, recipeItem) => {
+      if (!pantryIds.includes(recipeItem.id)) {
+        acc.push({
+          name: recipeItem.name,
+          subtractedAmount: 0
+        })
+      }
       this.inventory.forEach(ingredient => {
         if (recipeItem.id === ingredient.ingredient) {
           acc.push({
             name: recipeItem.name,
             subtractedAmount: ingredient.amount - recipeItem.amount
           });
-        }
-        if (!this.inventory.includes(recipeItem.id)) {
-          // console.log('test')
-          acc.push({
-            name: recipeItem.name,
-            subtractedAmount: 0
-          })
         }
       })
       return acc
