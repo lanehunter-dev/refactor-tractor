@@ -11,7 +11,6 @@ class Pantry {
         amount: ingredient.quantity.amount
       }
     })
-
     let pantryIds = this.inventory.map(ingredient => {
       return ingredient.ingredient
     })
@@ -20,7 +19,7 @@ class Pantry {
       if (!pantryIds.includes(recipeItem.id)) {
         acc.push({
           name: recipeItem.name,
-          subtractedAmount: 0
+          subtractedAmount: parseInt(`-${recipeItem.amount}`)
         })
       }
       this.inventory.forEach(ingredient => {
