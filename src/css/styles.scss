@@ -1,5 +1,8 @@
+$limeGreenBackground: #C4EB67;
+$greenCardText: #359567;
+$grayishBlue: #5B7894;
 body {
-  background-color: #5B7894;
+  background-color: $grayishBlue;
   display: grid;
   font-family: "Quicksand", sans-serif;
   grid-template-columns: 1fr 5fr;
@@ -29,7 +32,7 @@ h2 {
 }
 
 h3 {
-  color: #359567;
+  color: $greenCardText;
   cursor: pointer;
   height: 17%;
   margin: 5px 5px 10px 0px;
@@ -37,8 +40,8 @@ h3 {
 }
 
 h4 {
-  color: #359567;
-  background-color: #C4EB67;
+  color: $greenCardText;
+  background-color: $limeGreenBackground;
   border-radius: 3px;
   margin: 10px 0px 0px 0px;
   padding: 1px 4px 1px 4px;
@@ -56,7 +59,7 @@ header {
 }
 
 span {
-  color: #C4EB67;
+  color: $limeGreenBackground;
   font-weight: 400;
 }
 
@@ -68,7 +71,7 @@ span {
 
 #search {
   border-radius: 15px 15px 15px 15px;
-  border: 3px outset #C4EB67;
+  border: 3px outset $limeGreenBackground;
   box-shadow: 0px 0px 7px 0px #475d74;
   display: flex;
   flex-direction: row;
@@ -84,7 +87,7 @@ span {
   border-radius: 10px 0px 0px 10px;
   border: none;
   box-shadow: inset -3px -1px 20px 1px #5c7894;
-  color: #5B7894;
+  color: $grayishBlue;
   font-family: "Quicksand", sans-serif;
   font-size: 42px;
   height: 100%;
@@ -105,7 +108,7 @@ span {
 }
 
 #search-input::placeholder {
-  color: #5B7894;
+  color: $grayishBlue;
   font-size: 20px;
   text-align: right;
   text-shadow: none;
@@ -121,14 +124,14 @@ span {
 }
 
 .search-btn {
-  border-left: 3px outset #C4EB67;
+  border-left: 3px outset $limeGreenBackground;
   border-radius: 0px 15px 15px 0px;
   padding: 1%;
 }
 
 .nav-btn {
   align-items: center;
-  background: #5B7894 no-repeat;
+  background: $grayishBlue no-repeat;
   border: none;
   cursor: pointer;
   display: flex;
@@ -145,7 +148,7 @@ span {
 }
 
 .nav-btn:hover {
-  color: #C4EB67;
+  color: $limeGreenBackground;
   font-size: 14px;
   text-shadow: 0px 2px 4px black;
   transition: .4s ease;
@@ -158,7 +161,7 @@ span {
 }
 
 .saved-ingredients-btn {
-  border-left: 3px solid #C4EB67;
+  border-left: 3px solid $limeGreenBackground;
 }
 
 .ing-pan-btn {
@@ -174,45 +177,41 @@ span {
   height: 150px;
   overflow: hidden;
   width: 100%;
+
 }
 
-.my-recipes-banner,
 .welcome-msg {
   text-align: center;
   width: 95%;
-}
-
-.my-recipes-banner h1,
-.welcome-msg h1 {
-  color: white;
-  width: 100%;
+  margin-top: 50px;
+  h1 {
+    color: white;
+    width: 100%;
+  }
 }
 
 .my-recipes-banner {
-  display: none;
+  @extend .welcome-msg;
   margin-top: 25px;
+  display: none;
 }
-
-.welcome-msg {
-  margin-top: 50px;
-}
-
 
 /* FILTER SIDEBAR */
 aside {
   background-color: white;
   display: flex;
   justify-content: center;
-  height: auto;
+  height: 70vh;
   text-align: center;
 }
 
 .wrap {
   background-color: white;
-  height: 100vh;
+  height: 60vh;
   padding: 10px;
   position: relative;
   width: 200px;
+  overflow-y: scroll;
 }
 
 ul {
@@ -238,7 +237,7 @@ main {
 
 .recipe-card {
   background-color: white;
-  border: 2px solid #C4EB67;
+  border: 2px solid $limeGreenBackground;
   border-radius: 7px;
   cursor: pointer;
   height: 270px;
@@ -260,7 +259,7 @@ main {
 }
 
 .recipe-card:hover h3 {
-  text-shadow: 0px 0px 4px #C4EB67;
+  text-shadow: 0px 0px 4px $limeGreenBackground;
   transition: .8s ease;
 }
 
@@ -292,7 +291,7 @@ main {
 }
 
 .text {
-  background: #359567;
+  background: $greenCardText;
   color: white;
   font-weight: 700;
   font-size: 0px;
@@ -309,7 +308,7 @@ main {
 .show-pantry-recipes-btn,
 .show-all-btn,
 .filter-btn {
-  background-color: #359567;
+  background-color: $greenCardText;
   border: 0;
   border-radius: 3px;
   color: white;
@@ -352,7 +351,7 @@ main {
 }
 
 .drop-menu h2 {
-  color: #359567;
+  color: $greenCardText;
   margin: 0px;
 }
 
@@ -366,7 +365,7 @@ main {
 /* RECIPE INSTRUCTIONS */
 .recipe-instructions {
   background: white;
-  border: 3px solid #C4EB67;
+  border: 3px solid $limeGreenBackground;
   border-radius: 10px;
   box-shadow: 1px 1px 115px black;
   display: none;
@@ -383,9 +382,9 @@ main {
 
 #exit-recipe-btn {
   background: white;
-  border: 2px double #359567;
+  border: 2px double $greenCardText;
   border-radius: 5px;
-  color: #359567;
+  color: $greenCardText;
   cursor: pointer;
   font-size: 20px;
   font-weight: 700;
@@ -395,7 +394,7 @@ main {
 }
 
 #exit-recipe-btn:hover {
-  background: #C4EB67;
+  background: $limeGreenBackground;
   transition: .3s ease;
 }
 
@@ -413,7 +412,7 @@ main {
 
 .recipe-instructions h4 {
   background: white;
-  color: #359567;
+  color: $greenCardText;
 }
 
 .recipe-instructions p {
@@ -426,7 +425,7 @@ main {
 
 #overlay {
   filter:alpha(opacity=50);
-  background-color: #5B7894;
+  background-color: $grayishBlue;
   height:100%;
   left:0;
   opacity:0.5;
