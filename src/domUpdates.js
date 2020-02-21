@@ -2,7 +2,7 @@ import $ from 'jquery'
 
 const domUpdates = {
 
-  welcomeMessage(firstName) {
+  welcomeMessage: (firstName) => {
     $(".banner-image").prepend(`
       <div class="welcome-msg">
         <h1>Welcome ${firstName}!</h1>
@@ -10,7 +10,7 @@ const domUpdates = {
     `)
   },
 
-  makeCard(recipeInfo, shortRecipeName) {
+  makeCard: (recipeInfo, shortRecipeName) => {
     $('main').append(`
       <div class="recipe-card" id=${recipeInfo.id}>
         <h3 maxlength="40">${shortRecipeName}</h3>
@@ -26,30 +26,28 @@ const domUpdates = {
     `)
   },
 
-  listTag(cap, tag) {
+  listTag: (cap, tag) => {
     $(".tag-list").append(`
       <li><input type="checkbox" class="checked-tag" id="${tag}">
       <label for="${tag}">${cap}</label></li>
     `)
   },
 
-  displayPantryInfo(ingredient) {
+  displayPantryInfo: (ingredient) => {
     $(".pantry-list").append(`
       <li><input type="checkbox" class="pantry-checkbox" id="${ingredient.name}">
       <label for="${ingredient.name}">${ingredient.name}, ${ingredient.count}</label></li>
     `)
   },
 
-  makeRecipeTitle(recipe, ingredients) {
+  makeRecipeTitle: (recipe, ingredients) => {
     $(".recipe-instructions").append(`
       <button id="exit-recipe-btn">X</button>
       <h3 id="recipe-title">${recipe.name}</h3>
       <h4>Ingredients</h4>
       <p>${ingredients}</p>
     `)
-  },
-
-
+  }
 }
 
 export default domUpdates;
