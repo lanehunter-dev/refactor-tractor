@@ -47,9 +47,7 @@ const domUpdates = {
       <h4>Ingredients</h4>
       <p>${ingredients}</p>
     `)
-  },
-
-
+  }
 }
 
 export default domUpdates;
