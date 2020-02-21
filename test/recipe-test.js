@@ -4,7 +4,7 @@ import { expect } from 'chai';
 import Recipe from '../src/recipe';
 import recipeData from '../src/data/recipe-data';
 
-describe('Recipe', function() {
+  describe('Recipe', function() {
   let recipe;
   let recipeInfo;
 
@@ -22,15 +22,15 @@ describe('Recipe', function() {
   });
 
   it('should initialize with an id', function() {
-    expect(recipe.id).to.eq(595736);
+    expect(recipe.id).to.eq(1);
   });
 
   it('should initialize with an name', function() {
-    expect(recipe.name).to.eq('Loaded Chocolate Chip Pudding Cookie Cups');
+    expect(recipe.name).to.eq('Pastry Cream');
   });
 
   it('should initialize with an image', function() {
-    expect(recipe.image).to.eq('https://spoonacular.com/recipeImages/595736-556x370.jpg');
+    expect(recipe.image).to.eq('https://spoonacular.com/recipeImages/605132-556x370.jpg');
   });
 
   it('should initialize with an array of ingredients', function() {
