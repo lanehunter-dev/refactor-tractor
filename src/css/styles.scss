@@ -9,7 +9,7 @@ body {
   grid-template-areas:
     "header header"
     "image image"
-    "aside main";
+    "main main";
   height: 100vh;
   margin: 0;
   padding: 0;
@@ -201,13 +201,13 @@ aside {
   background-color: white;
   display: flex;
   justify-content: center;
-  height: 70vh;
+  height: 80vh;
   text-align: center;
 }
 
 .wrap {
   background-color: white;
-  height: 60vh;
+  height: 75vh;
   padding: 10px;
   position: relative;
   width: 200px;
@@ -218,11 +218,12 @@ ul {
   list-style-type: none;
   text-align: left;
   padding-left: 35px;
+
+  li {
+    margin: 2px;
+  }
 }
 
-li {
-  margin: 2px;
-}
 
 
 /* RECIPE CARD SECTION */
@@ -243,24 +244,24 @@ main {
   height: 270px;
   margin: 20px;
   padding: 15px;
-  width: 250px;
-}
-
-.recipe-card:hover .card-photo-preview {
-  opacity: 50%;
-  transition: .8s ease;
-}
-
-.recipe-card:hover .text {
-  font-size: 20px;
-  opacity: 100%;
-  transition: .5s ease;
-  width: 100%;
-}
-
-.recipe-card:hover h3 {
-  text-shadow: 0px 0px 4px $limeGreenBackground;
-  transition: .8s ease;
+  width: 270px;
+  //Hover behavior of recipe-card elements
+  &:hover {
+    h3 {
+      text-shadow: 0px 0px 4px $limeGreenBackground;
+      transition: .8s ease;
+    }
+    .card-photo-preview {
+      opacity: 50%;
+      transition: .8s ease;
+    }
+    .text {
+      font-size: 20px;
+      opacity: 100%;
+      transition: .5s ease;
+      width: 100%;
+    }
+  }
 }
 
 .card-apple-icon {
@@ -277,7 +278,7 @@ main {
   background-size: cover;
   border-radius: 7px;
   cursor: pointer;
-  height: 130px;
+  height: 145px;
   transition: .8s ease;
   width: 100%;
 }
@@ -305,9 +306,7 @@ main {
 
 
 /* BUTTONS */
-.show-pantry-recipes-btn,
-.show-all-btn,
-.filter-btn {
+.show-pantry-recipes-btn{
   background-color: $greenCardText;
   border: 0;
   border-radius: 3px;
@@ -316,23 +315,25 @@ main {
   font-family: "Quicksand", sans-serif;
   font-size: 12pt;
   font-weight: bold;
+  margin-top: 10px;
   padding: 5px 10px 5px 10px;
 }
 
-.show-pantry-recipes-btn {
-  margin-top: 10px;
+.filter-btn{
+  @extend .show-pantry-recipes-btn;
+  margin-top: auto;
+
+  &:hover {
+    background-color: #84C8A4;
+  }
 }
 
 .show-all-btn {
+  @extend .show-pantry-recipes-btn;
   height: 40px;
   margin-top: 20px;
   width: 200px;
 }
-
-.filter-btn:hover {
-  background-color: #84C8A4;
-}
-
 
 /* PANTRY LIST */
 .drop-menu {
@@ -348,11 +349,10 @@ main {
   text-align: center;
   width: 250px;
   z-index: 3;
-}
-
-.drop-menu h2 {
-  color: $greenCardText;
-  margin: 0px;
+  h2 {
+    color: $greenCardText;
+    margin: 0px;
+  }
 }
 
 .pantry-list {
@@ -378,6 +378,16 @@ main {
   top: 15%;
   width: 70%;
   z-index: 1000;
+  h4 {
+    background: white;
+    color: $greenCardText;
+  }
+  ol {
+    margin-right: 2%;
+  }
+  p {
+    margin-left: 2%;
+  }
 }
 
 #exit-recipe-btn {
@@ -391,11 +401,11 @@ main {
   margin: -4% -3% 2% -1%;
   position: fixed;
   transition: .3s ease;
-}
 
-#exit-recipe-btn:hover {
-  background: $limeGreenBackground;
-  transition: .3s ease;
+  &:hover {
+    background: $limeGreenBackground;
+    transition: .3s ease;
+  }
 }
 
 #recipe-title {
@@ -408,19 +418,6 @@ main {
   padding: 5%;
   text-align: center;
   text-shadow: 0px 0px 6px black;
-}
-
-.recipe-instructions h4 {
-  background: white;
-  color: $greenCardText;
-}
-
-.recipe-instructions p {
-  margin-left: 2%;
-}
-
-.recipe-instructions ol {
-  margin-right: 2%;
 }
 
 #overlay {
