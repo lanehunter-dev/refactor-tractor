@@ -47,7 +47,29 @@ const domUpdates = {
       <h4>Ingredients</h4>
       <p>${ingredients}</p>
     `)
-  }
+  },
+
+  hideRecipes: (recipe) => {
+    $(recipe).hide()
+  },
+
+  changeAppleImageSrc: (cardId, user, event) => {
+    if (!user.favoriteRecipes.includes(cardId)) {
+      $(event.target).attr('src', "../images/apple-logo.png")
+      user.saveRecipe(cardId);
+    } else {
+      $(event.target).attr('src', "../images/apple-logo-outline.png")
+      user.removeRecipe(cardId);
+    }
+  },
+
+  displayRecipes: (recipe) => {
+    $(recipe).css('display', 'block');
+  },
+
+  showRecipeBanner
+
+
 }
 
 export default domUpdates;

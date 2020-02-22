@@ -10,6 +10,11 @@ class User {
     this.favoriteRecipes.push(recipe);
   }
 
+  removeRecipe(recipe) {
+    let index = this.favoriteRecipes.indexOf(recipe)
+    this.favoriteRecipes.splice(index, 1)
+  }
+
   removeFavoriteRecipe(recipe) {
     let i = this.favoriteRecipes.indexOf(recipe);
     this.favoriteRecipes.splice(i, 1);

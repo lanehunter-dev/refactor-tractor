@@ -25,23 +25,12 @@ const loadPageHandler = () => {
 }
 
 fetchData().then(data => {
-    userData = data.userData;
-    recipeData = data.recipeData;
-    ingredientsData = data.ingredientsData;
-  })
+  userData = data.userData;
+  recipeData = data.recipeData;
+  ingredientsData = data.ingredientsData;
+})
   .then(loadPageHandler)
   .catch(error => console.log(error.message))
-
-
-// const wait = async () => {
-//   let response = fetchData();
-//   await response.then(data => {
-//     userData = data.userData;
-//     recipeData = data.recipeData;
-//     ingredientsData = data.ingredientsData;
-//   });
-// }
-// wait()
 
 function generateUser(data) {
   user = new User(data[Math.floor(Math.random() * data.length)]);
@@ -138,27 +127,18 @@ function filterRecipes(filtered) {
   let foundRecipes = recipes.filter(recipe => {
     return !filtered.includes(recipe);
   });
-  hideUnselectedRecipes(foundRecipes)
-}
-
-function hideUnselectedRecipes(foundRecipes) {
   foundRecipes.forEach(recipe => {
     let domRecipe = document.getElementById(`${recipe.id}`);
-    domRecipe.style.display = "none";
+    domUpdates.hideRecipes(domRecipe)
   });
 }
 
+
 // FAVORITE RECIPE FUNCTIONALITY
-function addToMyRecipes() {
+function addToMyRecipes(event) {
   if (event.target.className === "card-apple-icon") {
     let cardId = parseInt(event.target.closest(".recipe-card").id)
-    if (!user.favoriteRecipes.includes(cardId)) {
-      event.target.src = "../images/apple-logo.png";
-      user.saveRecipe(cardId);
-    } else {
-      event.target.src = "../images/apple-logo-outline.png";
-      user.removeRecipe(cardId);
-    }
+    domUpdates.changeAppleImageSrc(cardId, user, event)
   } else if (event.target.id === "exit-recipe-btn") {
     exitRecipe();
   } else if (isDescendant(event.target.closest(".recipe-card"), event.target)) {
@@ -183,7 +163,7 @@ function showSavedRecipes() {
   });
   unsavedRecipes.forEach(recipe => {
     let domRecipe = document.getElementById(`${recipe.id}`);
-    domRecipe.style.display = "none";
+    domUpdates.hideRecipes(domRecipe)
   });
   showMyRecipesBanner();
 }
@@ -196,6 +176,7 @@ function openRecipeInfo(event) {
   domUpdates.makeRecipeTitle(recipe, recipe.ingredients);
   addRecipeImage(recipe);
   generateInstructions(recipe);
+  generateIngredients(recipe)
   fullRecipeInfo.insertAdjacentHTML("beforebegin", "<section id='overlay'></div>");
 }
 
@@ -258,7 +239,6 @@ function filterNonSearched(filtered) {
     let ids = filtered.map(f => f.id);
     return !ids.includes(recipe.id)
   })
-  hideUnselectedRecipes(found);
 }
 
 function createRecipeObject(recipes) {
@@ -270,16 +250,16 @@ function toggleMenu() {
   var menuDropdown = document.querySelector(".drop-menu");
   menuOpen = !menuOpen;
   if (menuOpen) {
-    menuDropdown.style.display = "block";
+    domUpdates.displayRecipes(menuDropdown)
   } else {
-    menuDropdown.style.display = "none";
+    domUpdates.hideRecipes(menuDropdown)
   }
 }
 
 function showAllRecipes() {
   recipes.forEach(recipe => {
     let domRecipe = document.getElementById(`${recipe.id}`);
-    domRecipe.style.display = "block";
+    domUpdates.displayRecipes(domRecipe);
   });
   showWelcomeBanner();
 }
@@ -329,7 +309,7 @@ function findRecipesWithCheckedIngredients(selected) {
     });
     if (!recipeChecker(allRecipeIngredients, ingredientNames)) {
       let domRecipe = document.getElementById(`${recipe.id}`);
-      domRecipe.style.display = "none";
+      domUpdates.hideRecipes(domRecipe)
     }
   })
 }
