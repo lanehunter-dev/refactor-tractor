@@ -39,22 +39,23 @@ function generateUser(data) {
   findPantryInfo(data);
 }
 
-let fullRecipeInfo = document.querySelector(".recipe-instructions");
 let menuOpen = false;
 let pantryInfo = [];
 let recipes = [];
-let searchForm = document.querySelector("#search");
+
+let fullRecipeInfo = document.querySelector(".recipe-instructions");
+// let searchForm = document.querySelector("#search");
 let searchInput = document.querySelector("#search-input");
 let user;
 
 $('.show-all-btn').click(showAllRecipes);
-$('filter-btn').click(findCheckedBoxes);
+$('.filter-btn').click(findCheckedBoxes);
 $('main').click(selectCard);
 $(".my-pantry-btn").click(toggleMenu);
 $(".saved-recipes-btn").click(showSavedRecipes);
 $(".search-btn").click(searchRecipes);
 $(".show-pantry-recipes-btn").click(findCheckedPantryBoxes);
-searchForm.addEventListener("submit", pressEnterSearch);
+$("#search").on('input', searchRecipes);
 
 // CREATE RECIPE CARDS
 function createCards(data) {
@@ -167,7 +168,11 @@ function showSavedRecipes() {
 function openRecipeInfo(recipeId) {
   domUpdates.display('.recipe-instructions')
   let recipe = recipeData.find(recipe => recipe.id === Number(recipeId));
-  domUpdates.makeRecipeTitle(recipe, recipe.ingredients);
+  let ingredients = recipe.ingredients.map(recipeIngredient => {
+    return ingredientsData.find(item => item.id === recipeIngredient.id).name
+  })
+
+  domUpdates.makeRecipeTitle(recipe, ingredients);
   domUpdates.addRecipeImage(recipe);
   generateInstructions(recipe);
 }
@@ -196,11 +201,6 @@ function exitRecipe() {
 }
 
 // SEARCH RECIPES
-function pressEnterSearch(event) {
-  event.preventDefault();
-  searchRecipes();
-}
-
 function searchRecipes() {
   showAllRecipes();
   let searchedRecipes = recipeData.filter(recipe => {
@@ -214,6 +214,14 @@ function filterNonSearched(filtered) {
     let ids = filtered.map(f => f.id);
     return !ids.includes(recipe.id)
   })
+  hideUnselectedRecipes(found)
+}
+
+function hideUnselectedRecipes(foundRecipes) {
+  foundRecipes.forEach(recipe => {
+    let domRecipe = document.getElementById(`${recipe.id}`);
+    domUpdates.hide(domRecipe)
+  });
 }
 
 function createRecipeObject(recipes) {

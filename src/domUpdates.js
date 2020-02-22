@@ -1,5 +1,4 @@
 import $ from 'jquery'
-import { getDiffieHellman } from 'crypto'
 
 const domUpdates = {
 
@@ -86,9 +85,6 @@ const domUpdates = {
   addRecipeImage: (recipe) => {
     $('#recipe-title').css('background-image', `url(${recipe.image})`)
   },
-
-  
-
 
 }
 
