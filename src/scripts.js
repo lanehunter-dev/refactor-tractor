@@ -44,7 +44,6 @@ let pantryInfo = [];
 let recipes = [];
 
 let fullRecipeInfo = document.querySelector(".recipe-instructions");
-// let searchForm = document.querySelector("#search");
 let searchInput = document.querySelector("#search-input");
 let user;
 
@@ -205,6 +204,18 @@ function searchRecipes() {
   let searchedRecipes = recipeData.filter(recipe => {
     return recipe.name.toLowerCase().includes(searchInput.value.toLowerCase());
   });
+  let recipeAndingredients = recipeData.map(recipe => {
+    return recipe.ingredients.map(ingredient => {
+      return ingredientsData.find(item => {
+        if (item.id === ingredient.id) {
+          return item.name
+        }
+      })
+    })
+  })
+  let ingredients = recipeAndingredients.map(recipe => {
+    return recipe.ingredients.name
+  })
   filterNonSearched(createRecipeObject(searchedRecipes));
 }
 
