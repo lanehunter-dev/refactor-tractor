@@ -171,7 +171,6 @@ function openRecipeInfo(recipeId) {
   let ingredients = recipe.ingredients.map(recipeIngredient => {
     return ingredientsData.find(item => item.id === recipeIngredient.id).name
   })
-
   domUpdates.makeRecipeTitle(recipe, ingredients);
   domUpdates.addRecipeImage(recipe);
   generateInstructions(recipe);

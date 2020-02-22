@@ -45,7 +45,7 @@ const domUpdates = {
       <button id="exit-recipe-btn">X</button>
       <h3 id="recipe-title">${recipe.name}</h3>
       <h4>Ingredients</h4>
-      <p>${ingredients}</p>
+      <p>${ingredients.toString().split(',').join(', ')}</p>
     `)
   },
 
