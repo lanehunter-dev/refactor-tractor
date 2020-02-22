@@ -25,23 +25,12 @@ const loadPageHandler = () => {
 }
 
 fetchData().then(data => {
-    userData = data.userData;
-    recipeData = data.recipeData;
-    ingredientsData = data.ingredientsData;
-  })
+  userData = data.userData;
+  recipeData = data.recipeData;
+  ingredientsData = data.ingredientsData;
+})
   .then(loadPageHandler)
   .catch(error => console.log(error.message))
-
-
-// const wait = async () => {
-//   let response = fetchData();
-//   await response.then(data => {
-//     userData = data.userData;
-//     recipeData = data.recipeData;
-//     ingredientsData = data.ingredientsData;
-//   });
-// }
-// wait()
 
 function generateUser(data) {
   user = new User(data[Math.floor(Math.random() * data.length)]);
@@ -50,29 +39,22 @@ function generateUser(data) {
   findPantryInfo(data);
 }
 
-let allRecipesBtn = document.querySelector(".show-all-btn");
-let filterBtn = document.querySelector(".filter-btn");
-let fullRecipeInfo = document.querySelector(".recipe-instructions");
-let main = document.querySelector("main");
 let menuOpen = false;
-let pantryBtn = document.querySelector(".my-pantry-btn");
 let pantryInfo = [];
 let recipes = [];
-let savedRecipesBtn = document.querySelector(".saved-recipes-btn");
-let searchBtn = document.querySelector(".search-btn");
-let searchForm = document.querySelector("#search");
+
+let fullRecipeInfo = document.querySelector(".recipe-instructions");
 let searchInput = document.querySelector("#search-input");
-let showPantryRecipes = document.querySelector(".show-pantry-recipes-btn");
 let user;
 
-allRecipesBtn.addEventListener("click", showAllRecipes);
-filterBtn.addEventListener("click", findCheckedBoxes);
-main.addEventListener("click", addToMyRecipes);
-pantryBtn.addEventListener("click", toggleMenu);
-savedRecipesBtn.addEventListener("click", showSavedRecipes);
-searchBtn.addEventListener("click", searchRecipes);
-showPantryRecipes.addEventListener("click", findCheckedPantryBoxes);
-searchForm.addEventListener("submit", pressEnterSearch);
+$('.show-all-btn').click(showAllRecipes);
+$('.filter-btn').click(findCheckedBoxes);
+$('main').click(selectCard);
+$(".my-pantry-btn").click(toggleMenu);
+$(".saved-recipes-btn").click(showSavedRecipes);
+$(".search-btn").click(searchRecipes);
+$(".show-pantry-recipes-btn").click(findCheckedPantryBoxes);
+$("#search").on('input', searchRecipes);
 
 // CREATE RECIPE CARDS
 function createCards(data) {
@@ -138,31 +120,24 @@ function filterRecipes(filtered) {
   let foundRecipes = recipes.filter(recipe => {
     return !filtered.includes(recipe);
   });
-  hideUnselectedRecipes(foundRecipes)
-}
-
-function hideUnselectedRecipes(foundRecipes) {
   foundRecipes.forEach(recipe => {
     let domRecipe = document.getElementById(`${recipe.id}`);
-    domRecipe.style.display = "none";
+    domUpdates.hide(domRecipe)
   });
 }
 
-// FAVORITE RECIPE FUNCTIONALITY
-function addToMyRecipes() {
+
+// FAVORITE AND RECIPE CARD FUNCTIONALITY
+function selectCard(event) {
+  let recipeCard = event.target.closest(".recipe-card")
   if (event.target.className === "card-apple-icon") {
     let cardId = parseInt(event.target.closest(".recipe-card").id)
-    if (!user.favoriteRecipes.includes(cardId)) {
-      event.target.src = "../images/apple-logo.png";
-      user.saveRecipe(cardId);
-    } else {
-      event.target.src = "../images/apple-logo-outline.png";
-      user.removeRecipe(cardId);
-    }
+    domUpdates.changeAppleImageSrc(cardId, user, event)
   } else if (event.target.id === "exit-recipe-btn") {
-    exitRecipe();
-  } else if (isDescendant(event.target.closest(".recipe-card"), event.target)) {
-    openRecipeInfo(event);
+    exitRecipe(event);
+  } else if (isDescendant(recipeCard, event.target)) {
+    let recipeId = $(recipeCard).attr('id')
+    openRecipeInfo(recipeId);
   }
 }
 
@@ -183,31 +158,28 @@ function showSavedRecipes() {
   });
   unsavedRecipes.forEach(recipe => {
     let domRecipe = document.getElementById(`${recipe.id}`);
-    domRecipe.style.display = "none";
+    domUpdates.hide(domRecipe)
   });
-  showMyRecipesBanner();
+  domUpdates.showRecipeBanner()
 }
 
 // CREATE RECIPE INSTRUCTIONS
-function openRecipeInfo(event) {
-  fullRecipeInfo.style.display = "inline";
-  let recipeId = event.path.find(e => e.id).id;
+function openRecipeInfo(recipeId) {
+  domUpdates.display('.recipe-instructions')
   let recipe = recipeData.find(recipe => recipe.id === Number(recipeId));
-  domUpdates.makeRecipeTitle(recipe, recipe.ingredients);
-  addRecipeImage(recipe);
+  let ingredients = recipe.ingredients.map(recipeIngredient => {
+    return ingredientsData.find(item => item.id === recipeIngredient.id).name
+  })
+  domUpdates.makeRecipeTitle(recipe, ingredients);
+  domUpdates.addRecipeImage(recipe);
   generateInstructions(recipe);
-  fullRecipeInfo.insertAdjacentHTML("beforebegin", "<section id='overlay'></div>");
 }
 
-function addRecipeImage(recipe) {
-  document.getElementById("recipe-title").style.backgroundImage = `url(${recipe.image})`;
-}
-
-function generateIngredients(recipe) {
-  return recipe && recipe.ingredients.map(i => {
-    return `${capitalize(i.name)} (${i.quantity.amount} ${i.quantity.unit})`
-  }).join(", ");
-}
+// function generateIngredients(recipe) {
+//   return recipe && recipe.ingredients.map(i => {
+//     return `${capitalize(i.name)} (${i.quantity.amount} ${i.quantity.unit})`
+//   }).join(", ");
+// }
 
 function generateInstructions(recipe) {
   let instructionsList = "";
@@ -217,39 +189,33 @@ function generateInstructions(recipe) {
   instructions.forEach(i => {
     instructionsList += `<li>${i}</li>`
   });
-  fullRecipeInfo.insertAdjacentHTML("beforeend", "<h4>Instructions</h4>");
-  fullRecipeInfo.insertAdjacentHTML("beforeend", `<ol>${instructionsList}</ol>`);
+  domUpdates.showRecipeInfo(instructionsList)
 }
 
 function exitRecipe() {
-  while (fullRecipeInfo.firstChild &&
-    fullRecipeInfo.removeChild(fullRecipeInfo.firstChild)) {}
-  fullRecipeInfo.style.display = "none";
-  document.getElementById("overlay").remove();
-}
-
-// TOGGLE DISPLAYS
-function showMyRecipesBanner() {
-  document.querySelector(".welcome-msg").style.display = "none";
-  document.querySelector(".my-recipes-banner").style.display = "block";
-}
-
-function showWelcomeBanner() {
-  document.querySelector(".welcome-msg").style.display = "flex";
-  document.querySelector(".my-recipes-banner").style.display = "none";
+  while (fullRecipeInfo.firstChild && fullRecipeInfo.removeChild(fullRecipeInfo.firstChild)) {
+    domUpdates.hide(fullRecipeInfo);
+  }
 }
 
 // SEARCH RECIPES
-function pressEnterSearch(event) {
-  event.preventDefault();
-  searchRecipes();
-}
-
 function searchRecipes() {
   showAllRecipes();
   let searchedRecipes = recipeData.filter(recipe => {
     return recipe.name.toLowerCase().includes(searchInput.value.toLowerCase());
   });
+  let recipeAndingredients = recipeData.map(recipe => {
+    return recipe.ingredients.map(ingredient => {
+      return ingredientsData.find(item => {
+        if (item.id === ingredient.id) {
+          return item.name
+        }
+      })
+    })
+  })
+  let ingredients = recipeAndingredients.map(recipe => {
+    return recipe.ingredients.name
+  })
   filterNonSearched(createRecipeObject(searchedRecipes));
 }
 
@@ -258,7 +224,14 @@ function filterNonSearched(filtered) {
     let ids = filtered.map(f => f.id);
     return !ids.includes(recipe.id)
   })
-  hideUnselectedRecipes(found);
+  hideUnselectedRecipes(found)
+}
+
+function hideUnselectedRecipes(foundRecipes) {
+  foundRecipes.forEach(recipe => {
+    let domRecipe = document.getElementById(`${recipe.id}`);
+    domUpdates.hide(domRecipe)
+  });
 }
 
 function createRecipeObject(recipes) {
@@ -267,21 +240,21 @@ function createRecipeObject(recipes) {
 }
 
 function toggleMenu() {
-  var menuDropdown = document.querySelector(".drop-menu");
+  var menuDropdown = $(".drop-menu");
   menuOpen = !menuOpen;
   if (menuOpen) {
-    menuDropdown.style.display = "block";
+    domUpdates.display(menuDropdown)
   } else {
-    menuDropdown.style.display = "none";
+    domUpdates.hide(menuDropdown)
   }
 }
 
 function showAllRecipes() {
   recipes.forEach(recipe => {
     let domRecipe = document.getElementById(`${recipe.id}`);
-    domRecipe.style.display = "block";
+    domUpdates.display(domRecipe);
   });
-  showWelcomeBanner();
+  domUpdates.showWelcomeBanner()
 }
 
 // CREATE AND USE PANTRY
@@ -329,7 +302,7 @@ function findRecipesWithCheckedIngredients(selected) {
     });
     if (!recipeChecker(allRecipeIngredients, ingredientNames)) {
       let domRecipe = document.getElementById(`${recipe.id}`);
-      domRecipe.style.display = "none";
+      domUpdates.hide(domRecipe)
     }
   })
 }

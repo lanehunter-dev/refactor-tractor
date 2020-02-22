@@ -6,6 +6,7 @@ class Recipe {
     this.tags = recipe.tags;
     this.ingredients = recipe.ingredients;
   }
+
   calculateIngredientsCost() {
     // return this.ingredients.map(i => {
     //   ingredientData.find(ingredient => ingredient === i);
