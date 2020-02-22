@@ -1,4 +1,5 @@
 import $ from 'jquery'
+import { getDiffieHellman } from 'crypto'
 
 const domUpdates = {
 
@@ -63,7 +64,7 @@ const domUpdates = {
     }
   },
 
-  displayRecipes: (recipe) => {
+  display: (recipe) => {
     $(recipe).css('display', 'block');
   },
 
@@ -75,7 +76,18 @@ const domUpdates = {
   showWelcomeBanner: () => {
     $('.welcome-msg').css('display', 'flex')
     $('.my-recipes-banner').hide()
-  }
+  },
+
+  showRecipeInfo: (instructionsList) => {
+    $(".recipe-instructions").prepend("<h4>Instructions</h4>")
+    $(".recipe-instructions").append(`<ol>${instructionsList}</ol>`)
+  },
+
+  addRecipeImage: (recipe) => {
+    $('#recipe-title').css('background-image', `url(${recipe.image})`)
+  },
+
+  
 
 
 }
