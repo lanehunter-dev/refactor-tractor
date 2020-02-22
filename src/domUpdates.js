@@ -49,7 +49,7 @@ const domUpdates = {
     `)
   },
 
-  hideRecipes: (recipe) => {
+  hide: (recipe) => {
     $(recipe).hide()
   },
 
@@ -67,7 +67,15 @@ const domUpdates = {
     $(recipe).css('display', 'block');
   },
 
-  showRecipeBanner
+  showRecipeBanner: () => {
+    $('.welcome-msg').hide();
+    $('.my-recipes-banner').css('display', 'block')
+  },
+
+  showWelcomeBanner: () => {
+    $('.welcome-msg').css('display', 'flex')
+    $('.my-recipes-banner').hide()
+  }
 
 
 }

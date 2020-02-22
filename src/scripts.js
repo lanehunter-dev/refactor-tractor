@@ -129,7 +129,7 @@ function filterRecipes(filtered) {
   });
   foundRecipes.forEach(recipe => {
     let domRecipe = document.getElementById(`${recipe.id}`);
-    domUpdates.hideRecipes(domRecipe)
+    domUpdates.hide(domRecipe)
   });
 }
 
@@ -140,7 +140,7 @@ function addToMyRecipes(event) {
     let cardId = parseInt(event.target.closest(".recipe-card").id)
     domUpdates.changeAppleImageSrc(cardId, user, event)
   } else if (event.target.id === "exit-recipe-btn") {
-    exitRecipe();
+    exitRecipe(event);
   } else if (isDescendant(event.target.closest(".recipe-card"), event.target)) {
     openRecipeInfo(event);
   }
@@ -163,9 +163,9 @@ function showSavedRecipes() {
   });
   unsavedRecipes.forEach(recipe => {
     let domRecipe = document.getElementById(`${recipe.id}`);
-    domUpdates.hideRecipes(domRecipe)
+    domUpdates.hide(domRecipe)
   });
-  showMyRecipesBanner();
+  domUpdates.showRecipeBanner()
 }
 
 // CREATE RECIPE INSTRUCTIONS
@@ -204,20 +204,9 @@ function generateInstructions(recipe) {
 
 function exitRecipe() {
   while (fullRecipeInfo.firstChild &&
-    fullRecipeInfo.removeChild(fullRecipeInfo.firstChild)) {}
+    fullRecipeInfo.removeChild(fullRecipeInfo.firstChild))
   fullRecipeInfo.style.display = "none";
   document.getElementById("overlay").remove();
-}
-
-// TOGGLE DISPLAYS
-function showMyRecipesBanner() {
-  document.querySelector(".welcome-msg").style.display = "none";
-  document.querySelector(".my-recipes-banner").style.display = "block";
-}
-
-function showWelcomeBanner() {
-  document.querySelector(".welcome-msg").style.display = "flex";
-  document.querySelector(".my-recipes-banner").style.display = "none";
 }
 
 // SEARCH RECIPES
@@ -252,7 +241,7 @@ function toggleMenu() {
   if (menuOpen) {
     domUpdates.displayRecipes(menuDropdown)
   } else {
-    domUpdates.hideRecipes(menuDropdown)
+    domUpdates.hide(menuDropdown)
   }
 }
 
@@ -261,7 +250,7 @@ function showAllRecipes() {
     let domRecipe = document.getElementById(`${recipe.id}`);
     domUpdates.displayRecipes(domRecipe);
   });
-  showWelcomeBanner();
+  domUpdates.showWelcomeBanner()
 }
 
 // CREATE AND USE PANTRY
@@ -309,7 +298,7 @@ function findRecipesWithCheckedIngredients(selected) {
     });
     if (!recipeChecker(allRecipeIngredients, ingredientNames)) {
       let domRecipe = document.getElementById(`${recipe.id}`);
-      domUpdates.hideRecipes(domRecipe)
+      domUpdates.hide(domRecipe)
     }
   })
 }
