@@ -213,9 +213,6 @@ function searchRecipes() {
       })
     })
   })
-  let ingredients = recipeAndingredients.map(recipe => {
-    return recipe.ingredients.name
-  })
   filterNonSearched(createRecipeObject(searchedRecipes));
 }
 

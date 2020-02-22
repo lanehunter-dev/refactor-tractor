@@ -1,0 +1,60 @@
+body {
+  background-color: $grayishBlue;
+  display: grid;
+  font-family: "Quicksand", sans-serif;
+  grid-template-columns: 1fr 5fr;
+  grid-template-areas:
+    "header header"
+    "image image"
+    "aside main";
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: auto;
+}
+
+main {
+  grid-area: main;
+  display: flex;
+  justify-content: center;
+  align-content: flex-start;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+h1 {
+  align-self: center;
+  color: white;
+  font-family: "Sulphur Point", sans-serif;
+  font-size: 50px;
+  margin: 0%;
+  padding: 0.5% 0.7% 0%;
+  width: 70%;
+}
+
+h2 {
+  color: #84C8A4;
+  margin: 10px 0px 10px 0px;
+}
+
+h3 {
+  color: $greenCardText;
+  cursor: pointer;
+  height: 17%;
+  margin: 5px 5px 10px 0px;
+  transition: .8s ease;
+}
+
+h4 {
+  color: $greenCardText;
+  background-color: $limeGreenBackground;
+  border-radius: 3px;
+  margin: 10px 0px 0px 0px;
+  padding: 1px 4px 1px 4px;
+  width: max-content;
+}
+
+span {
+  color: $limeGreenBackground;
+  font-weight: 400;
+}

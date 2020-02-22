@@ -1,6 +1,12 @@
-/* This is an example of using Sass, otherwise plain CSS works too*/
-$primary-background: pink;
+@import 'variables';
+@import 'mixins';
+@import 'general-elements';
+@import 'styles';
+@import 'header';
+@import 'banner';
+@import 'filter-column';
+@import 'recipe-cards';
+@import 'pantry-list';
 
-body {
-  background-color: $primary-background;
-}
+
+
