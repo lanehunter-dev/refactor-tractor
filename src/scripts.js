@@ -76,7 +76,6 @@ $('.filter-btn').click(findCheckedBoxes);
 $('main').click(selectCard);
 $(".my-pantry-btn").click(toggleMenu);
 $(".saved-recipes-btn").click(showSavedRecipes);
-$(".search-btn").click(searchRecipes);
 $(".show-pantry-recipes-btn").click(findCheckedPantryBoxes);
 $("#search").on('input', searchRecipes);
 
@@ -258,12 +257,6 @@ function hideUnselectedRecipes(foundRecipes) {
     let domRecipe = document.getElementById(`${recipe.id}`);
     domUpdates.hide(domRecipe)
   });
-}
-
-
-function createRecipeObject(recipes) {
-  recipes = recipes.map(recipe => new Recipe(recipe));
-  return recipes
 }
 
 function toggleMenu() {
