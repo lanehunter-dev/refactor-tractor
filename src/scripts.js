@@ -213,7 +213,7 @@ function searchRecipes() {
       })
     })
   })
-  filterNonSearched(createRecipeObject(searchedRecipes));
+  filterNonSearched(searchedRecipes);
 }
 
 function filterNonSearched(filtered) {
