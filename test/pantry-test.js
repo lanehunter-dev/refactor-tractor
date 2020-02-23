@@ -41,6 +41,14 @@ describe('Pantry', function() {
     expect(pantry.checkStockForRecipe(recipe)).to.equal(false)
   })
 
+  it('should be able to return array of ingredients', function() {
+    recipe = new Recipe(recipeData[1]);
+    expect(pantry.findNeededIngredients(recipe).length).to.deep.equal(1)
+  })
 
+  it('should be able to find difference in ingredients', function() {
+    recipe = new Recipe(recipeData[1]);
+    expect(pantry.findNeededIngredients(recipe)[0]).to.equal('You need 1 more blackberry juice')
+  })
 
 })
