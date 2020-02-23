@@ -86,7 +86,6 @@ function createCards(data) {
     let recipeInfo = new Recipe(recipe);
     let shortRecipeName = recipeInfo.name;
     recipes.push(recipeInfo);
-
     if (recipeInfo.name.length > 40) {
       shortRecipeName = recipeInfo.name.substring(0, 40) + "...";
     }
@@ -229,8 +228,11 @@ function searchRecipes() {
   showAllRecipes();
   let searchedRecipes = recipeData.filter(recipe => {
     return recipe.name.toLowerCase().includes(searchInput.value.toLowerCase()) ||
-    recipe.ingredients.includes(searchInput.value.toLowerCase());
+    recipe.ingredients.find(ingredient => {
+      return ingredient.name.includes(searchInput.value.toLowerCase())
+    })
   });
+  console.log(searchedRecipes);
   let recipeAndingredients = recipeData.map(recipe => {
     return recipe.ingredients.map(ingredient => {
       return ingredientsData.find(item => {
@@ -239,18 +241,11 @@ function searchRecipes() {
         }
       })
     })
-  })
-  // console.log(recipeAndingredients);
-  // let ingredients = recipeAndingredients.map(recipe => {
-  //   return recipe.ingredients.name
-  // })
-  // console.log(ingredients);
-  filterNonSearched(createRecipeObject(searchedRecipes), );
+  });
+  filterNonSearched(searchedRecipes);
 }
 
 function filterNonSearched(filtered) {
-  console.log(filtered);
-  console.log(recipes);
   let found = recipes.filter(recipe => {
     let ids = filtered.map(f => f.id);
     return !ids.includes(recipe.id)
@@ -265,7 +260,6 @@ function hideUnselectedRecipes(foundRecipes) {
   });
 }
 
-// function hideNonMatches() ==>
 
 function createRecipeObject(recipes) {
   recipes = recipes.map(recipe => new Recipe(recipe));
