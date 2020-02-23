@@ -24,11 +24,35 @@ const loadPageHandler = () => {
   findTags(recipeData)
 }
 
+const reformatData = () => {
+  recipeData = recipeData.map(recipe => {
+    return {
+      name: recipe.name,
+      id: recipe.id,
+      image: recipe.image,
+      ingredients: recipe.ingredients.reduce((reformattedList, ingredient) => {
+        reformattedList.push({
+          name: ingredientsData.find(el => el.id === ingredient.id).name,
+          id: ingredient.id,
+          quantity: {
+            amount: ingredient.quantity.amount,
+            unit: ingredient.quantity.unit,
+          }
+        })
+        return reformattedList
+      }, []),
+      instructions: recipe.instructions,
+      tags: recipe.tags,
+    }
+})
+}
+
 fetchData().then(data => {
   userData = data.userData;
-  recipeData = data.recipeData;
   ingredientsData = data.ingredientsData;
+  recipeData = data.recipeData;
 })
+  .then(reformatData)
   .then(loadPageHandler)
   .catch(error => console.log(error.message))
 
@@ -52,7 +76,6 @@ $('.filter-btn').click(findCheckedBoxes);
 $('main').click(selectCard);
 $(".my-pantry-btn").click(toggleMenu);
 $(".saved-recipes-btn").click(showSavedRecipes);
-$(".search-btn").click(searchRecipes);
 $(".show-pantry-recipes-btn").click(findCheckedPantryBoxes);
 $("#search").on('input', searchRecipes);
 
@@ -167,6 +190,7 @@ function showSavedRecipes() {
 function openRecipeInfo(recipeId) {
   domUpdates.display('.recipe-instructions')
   let recipe = recipeData.find(recipe => recipe.id === Number(recipeId));
+  console.log(recipe);
   let ingredients = recipe.ingredients.map(recipeIngredient => {
     return ingredientsData.find(item => item.id === recipeIngredient.id).name
   })
@@ -202,8 +226,12 @@ function exitRecipe() {
 function searchRecipes() {
   showAllRecipes();
   let searchedRecipes = recipeData.filter(recipe => {
-    return recipe.name.toLowerCase().includes(searchInput.value.toLowerCase());
+    return recipe.name.toLowerCase().includes(searchInput.value.toLowerCase()) ||
+    recipe.ingredients.find(ingredient => {
+      return ingredient.name.includes(searchInput.value.toLowerCase())
+    })
   });
+  console.log(searchedRecipes);
   let recipeAndingredients = recipeData.map(recipe => {
     return recipe.ingredients.map(ingredient => {
       return ingredientsData.find(item => {
@@ -212,11 +240,8 @@ function searchRecipes() {
         }
       })
     })
-  })
-  let ingredients = recipeAndingredients.map(recipe => {
-    return recipe.ingredients.name
-  })
-  filterNonSearched(createRecipeObject(searchedRecipes));
+  });
+  filterNonSearched(searchedRecipes);
 }
 
 function filterNonSearched(filtered) {
@@ -232,11 +257,6 @@ function hideUnselectedRecipes(foundRecipes) {
     let domRecipe = document.getElementById(`${recipe.id}`);
     domUpdates.hide(domRecipe)
   });
-}
-
-function createRecipeObject(recipes) {
-  recipes = recipes.map(recipe => new Recipe(recipe));
-  return recipes
 }
 
 function toggleMenu() {
