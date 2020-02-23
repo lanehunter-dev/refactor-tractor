@@ -212,7 +212,7 @@ function searchRecipes() {
         }
       })
     })
-  })
+  });
   filterNonSearched(searchedRecipes);
 }
 
