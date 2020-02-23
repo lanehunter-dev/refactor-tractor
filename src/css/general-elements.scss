@@ -14,7 +14,7 @@ body {
 }
 
 main {
-  @include flex-center(justify-content)
+  @include flex-center-justify()
   align-content: flex-start;
   flex-direction: row;
   flex-wrap: wrap;

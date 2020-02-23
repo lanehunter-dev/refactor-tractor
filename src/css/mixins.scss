@@ -8,7 +8,12 @@
   font-family: $family;
 }
 
-@mixin flex-center($axis) {
+@mixin flex-center-justify() {
   display: flex;
-  $axis: center;
+  justify-content: center;
+}
+
+@mixin flex-center-align() {
+  display: flex;
+  align-items: center;
 }
