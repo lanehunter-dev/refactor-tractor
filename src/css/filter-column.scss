@@ -1,0 +1,37 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  height: 35em;
+  padding: 10px;
+  width: 13em;
+  @include sticky-position;
+  font-size: 1.3em;
+
+
+  h2 {
+    @include sticky-position;
+  }
+}
+
+ul {
+  list-style-type: none;
+  text-align: left;
+  padding-left: 35px;
+  @include sticky-position;
+
+  li {
+    margin: 2px;
+    @include sticky-position;
+  }
+}
+
+.filter-btn{
+  @extend .show-pantry-recipes-btn;
+  @include sticky-position;
+
+  &:hover {
+    background-color: #84C8A4;
+  }
+}

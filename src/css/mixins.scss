@@ -1,0 +1,9 @@
+@mixin sticky-position {
+  position: sticky;
+  top: 0;
+}
+
+@mixin font-size-family($size, $family) {
+  font-size: $size;
+  font-family: $family;
+}
