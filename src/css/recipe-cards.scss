@@ -46,10 +46,9 @@
 }
 
 .card-photo-container {
-  align-items: center;
-  display: flex;
-  height: 130px;
+  @include flex-center(align-items)
   justify-content: center;
+  height: 130px;
   position: relative;
 }
 

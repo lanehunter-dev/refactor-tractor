@@ -9,5 +9,6 @@
 }
 
 @mixin flex-center($axis) {
+  display: flex;
   $axis: center;
 }
