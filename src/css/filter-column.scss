@@ -1,33 +1,41 @@
-aside {
-  background-color: white;
-  display: flex;
-  justify-content: center;
-  height: 80vh;
-  text-align: center;
-}
-
 .wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   background-color: white;
-  height: 75vh;
+  height: fit-content;
   padding: 10px;
-  position: relative;
-  width: 200px;
-  overflow-y: scroll;
+  width: 13em;
+
+  position: sticky;
+  top: 0;
+  font-size: 1.3em;
+
+
+  h2 {
+    position: sticky;
+    top: 0;
+  }
 }
 
 ul {
   list-style-type: none;
   text-align: left;
   padding-left: 35px;
+  position: sticky;
+  top: 0;
 
   li {
     margin: 2px;
+    position: sticky;
+    top: 0;
   }
 }
 
 .filter-btn{
   @extend .show-pantry-recipes-btn;
-  margin-top: auto;
+  position: sticky;
+  top: 0;
 
   &:hover {
     background-color: #84C8A4;
