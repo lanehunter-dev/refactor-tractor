@@ -1,0 +1,14 @@
+@mixin sticky-position {
+  position: sticky;
+  top: 0;
+}
+
+@mixin font-size-family($size, $family) {
+  font-size: $size;
+  font-family: $family;
+}
+
+@mixin flex-center($axis) {
+  display: flex;
+  $axis: center;
+}
