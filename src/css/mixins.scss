@@ -7,3 +7,7 @@
   font-size: $size;
   font-family: $family;
 }
+
+@mixin flex-center($axis) {
+  $axis: center;
+}

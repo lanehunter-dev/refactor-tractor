@@ -14,12 +14,11 @@ body {
 }
 
 main {
-  grid-area: main;
-  display: flex;
-  justify-content: center;
+  @include flex-center(justify-content)
   align-content: flex-start;
   flex-direction: row;
   flex-wrap: wrap;
+  grid-area: main;
 }
 
 h1 {
