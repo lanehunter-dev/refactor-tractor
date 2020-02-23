@@ -190,7 +190,6 @@ function showSavedRecipes() {
 function openRecipeInfo(recipeId) {
   domUpdates.display('.recipe-instructions')
   let recipe = recipeData.find(recipe => recipe.id === Number(recipeId));
-  console.log(recipe);
   let ingredients = recipe.ingredients.map(recipeIngredient => {
     return ingredientsData.find(item => item.id === recipeIngredient.id).name
   })
@@ -198,12 +197,6 @@ function openRecipeInfo(recipeId) {
   domUpdates.addRecipeImage(recipe);
   generateInstructions(recipe);
 }
-
-// function generateIngredients(recipe) {
-//   return recipe && recipe.ingredients.map(i => {
-//     return `${capitalize(i.name)} (${i.quantity.amount} ${i.quantity.unit})`
-//   }).join(", ");
-// }
 
 function generateInstructions(recipe) {
   let instructionsList = "";
@@ -231,7 +224,6 @@ function searchRecipes() {
       return ingredient.name.includes(searchInput.value.toLowerCase())
     })
   });
-  console.log(searchedRecipes);
   let recipeAndingredients = recipeData.map(recipe => {
     return recipe.ingredients.map(ingredient => {
       return ingredientsData.find(item => {
