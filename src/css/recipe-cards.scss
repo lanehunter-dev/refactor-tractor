@@ -46,7 +46,7 @@
 }
 
 .card-photo-container {
-  @include flex-center(align-items)
+  @include flex-center-align();
   justify-content: center;
   height: 130px;
   position: relative;

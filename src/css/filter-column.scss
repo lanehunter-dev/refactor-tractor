@@ -1,5 +1,5 @@
 .wrap {
-  @include flex-center(align-items)
+  @include flex-center-align();
   flex-direction: column;
   background-color: white;
   height: 35em;
