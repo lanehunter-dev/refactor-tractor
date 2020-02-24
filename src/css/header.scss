@@ -59,13 +59,13 @@ header {
 }
 
 .nav-btn {
+  color: white;
   @include flex-center-align();
   flex-direction: column;
   background: $grayishBlue;
   border: none;
   cursor: pointer;
   font-weight: 700;
-  outline: none;
   transition: .4s ease;
   width: 15%;
 
