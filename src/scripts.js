@@ -6,6 +6,7 @@ import './css/styles.scss';
 
 import './images/apple-logo.png'
 import './images/apple-logo-outline.png'
+import './images/filter.svg'
 import './images/search.png'
 import './images/cookbook.png'
 import './images/seasoning.png'
@@ -63,7 +64,8 @@ function generateUser(data) {
   findPantryInfo(data);
 }
 
-let menuOpen = false;
+let pantryMenuOpen = false;
+let typeMenuOpen = false;
 let pantryInfo = [];
 let recipes = [];
 
@@ -75,6 +77,7 @@ $('.show-all-btn').click(showAllRecipes);
 $('.filter-btn').click(findCheckedBoxes);
 $('main').click(selectCard);
 $(".my-pantry-btn").click(toggleMenu);
+$(".drop").click(toggleMenu);
 $(".favorite-recipes-btn").click(showFavoriteRecipes);
 $(".recipes-to-cook-btn").click(showRecipesToCook);
 $(".show-pantry-recipes-btn").click(findCheckedPantryBoxes);
@@ -269,13 +272,14 @@ function hideUnselectedRecipes(foundRecipes) {
   });
 }
 
-function toggleMenu() {
-  var menuDropdown = $(".drop-menu");
-  menuOpen = !menuOpen;
-  if (menuOpen) {
-    domUpdates.display(menuDropdown)
-  } else {
-    domUpdates.hide(menuDropdown)
+function toggleMenu(e) {
+  console.log(e.target)
+  if(e.target.classList.contains("my-pantry-btn") || e.target.parentNode.classList.contains("my-pantry-btn")){
+    pantryMenuOpen ? domUpdates.hide(".drop-menu") : domUpdates.display(".drop-menu");
+    pantryMenuOpen = !pantryMenuOpen
+  } else if(e.target.classList.contains("drop") || e.target.parentNode.classList.contains("drop")) {
+    typeMenuOpen ? domUpdates.hide(".filter-type-drop") : domUpdates.display(".filter-type-drop");
+    typeMenuOpen = !typeMenuOpen;
   }
 }
 

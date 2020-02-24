@@ -17,6 +17,10 @@
   }
 }
 
+.drop-menu-2 {
+  @extends drop-menu;
+}
+
 .pantry-list {
   color: #000000;
   padding-left: 15px;
