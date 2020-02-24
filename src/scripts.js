@@ -44,7 +44,7 @@ const reformatData = () => {
       instructions: recipe.instructions,
       tags: recipe.tags,
     }
-})
+  })
 }
 
 fetchData().then(data => {
@@ -91,6 +91,11 @@ function createCards(data) {
     }
     domUpdates.makeCard(recipeInfo, shortRecipeName)
   });
+}
+
+//Aria butotn functions
+function ariaHeartChange(event) {
+  
 }
 
 // FILTER BY RECIPE TAGS

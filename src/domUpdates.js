@@ -5,7 +5,7 @@ const domUpdates = {
   welcomeMessage: (firstName) => {
     $(".banner-image").prepend(`
       <div class="welcome-msg">
-        <h1>Welcome ${firstName}!</h1>
+        <h2>Welcome ${firstName}!</h2>
       </div>
     `)
   },
@@ -13,18 +13,17 @@ const domUpdates = {
   makeCard: (recipeInfo, shortRecipeName) => {
     $('main').append(`
       <div class="recipe-card" id=${recipeInfo.id}>
-        <h3 maxlength="40">${shortRecipeName}</h3>
+        <h4 maxlength="40">${shortRecipeName}</h4>
         <div class="card-photo-container">
           <img src=${recipeInfo.image} class="card-photo-preview" alt="${recipeInfo.name} recipe" title="${recipeInfo.name} recipe">
           <div class="text">
-            <div>Click for Instructions</div>
+            <div tabindex="0">Click for Instructions</div>
           </div>
         </div>
-        <h4>${recipeInfo.tags[0]}</h4>
-        <img src="../images/heart-icon-outline-green.svg" alt="unfilled heart icon" class="card-apple-icon">
-        <img src="../images/mixer-icon-outline.svg" alt="unfilled mixer icon" class="card-mixer-icon">
-      </div>
-    `)
+        <h5>${recipeInfo.tags[0]}</h5>
+        <img onclick="domUpdates.changeHeartImageSrc();" onKeyDown="domUpdates.changeHeartImageSrc();" tabindex="0" role="button" src="../images/heart-icon-outline-green.svg" alt="unfilled heart icon" class="card-apple-icon">
+        <img tabindex="0" role="button" src="../images/mixer-icon-outline.svg" alt="unfilled mixer icon" class="card-mixer-icon">
+      </div>`)
   },
 
   listTag: (cap, tag) => {
@@ -44,8 +43,8 @@ const domUpdates = {
   makeRecipeTitle: (recipe, ingredients) => {
     $(".recipe-instructions").append(`
       <button id="exit-recipe-btn">X</button>
-      <h3 id="recipe-title">${recipe.name}</h3>
-      <h4>Ingredients</h4>
+      <h4 id="recipe-title">${recipe.name}</h4>
+      <h5>Ingredients</h5>
       <p>${ingredients.toString().split(',').join(', ')}</p>
     `)
   },
@@ -97,7 +96,7 @@ const domUpdates = {
   },
 
   showRecipeInfo: (instructionsList) => {
-    $(".recipe-instructions").prepend("<h4>Instructions</h4>")
+    $(".recipe-instructions").prepend("<h5>Instructions</h5>")
     $(".recipe-instructions").append(`<ol>${instructionsList}</ol>`)
   },
 

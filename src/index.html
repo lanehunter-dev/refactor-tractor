@@ -10,9 +10,9 @@
   <body>
     <header>
       <h1><span>fresh</span>Picks<img src="images/apple-logo.png" alt="apple icon" class="header-apple-icon"></h1>
-      <form id="search" role="search">
-        <input id="search-input" type="text" autocomplete="off" placeholder="Search Recipes..."></input>
-        <label for="search-input" class="search-label">Search</label>
+      <form for="search" id="search" role="search">
+        <input aria-label="search-input" id="search-input" type="text" autocomplete="off" placeholder="Search Recipes..."></input>
+        <label for="search" class="search-label">Search</label>
         <button class="nav-btn search-btn" type="button" name="button"><img src="../images/search.png" alt="search button"></button>
       </form>
       <button class="nav-btn ing-pan-btn recipes-to-cook-btn" type="button" name="button"><img src="../images/mixer-icon-outline-white.svg" alt="recipes to cook button">Recipes To Cook</button>
@@ -21,22 +21,22 @@
     </header>
     <section class="banner-image">
       <div class="my-recipes-banner">
-        <h1>My Favorite Recipes</h1>
+        <h2>My Favorite Recipes</h2>
         <button class="show-all-btn">Show All Recipes</button>
       </div>
       <div class="recipes-to-cook-banner">
-        <h1>Recipes To Cook</h1>
+        <h2>Recipes To Cook</h2>
         <button class="show-all-btn">Show All Recipes</button>
       </div>
     </section>
     <div class="drop-menu">
-      <h2>My Pantry</h2>
+      <h3>My Pantry</h3>
       <button class="show-pantry-recipes-btn">What Can I Make?</button>
       <ul class="pantry-list"></ul>
     </div>
     <aside>
       <div class="wrap">
-        <h2>Recipe Type</h2>
+        <h3>Recipe Type</h3>
         <ul class="tag-list">
         </ul>
         <button class="filter-btn">Filter Recipes</button>
