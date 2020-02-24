@@ -83,8 +83,12 @@ header {
   }
 }
 
-.saved-ingredients-btn {
+.favorite-ingredients-btn {
   border-left: 3px solid $limeGreenBackground;
+}
+
+.recipes-to-cook-btn {
+  border-right: 3px solid $limeGreenBackground;
 }
 
 .ing-pan-btn {

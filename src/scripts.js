@@ -75,7 +75,7 @@ $('.show-all-btn').click(showAllRecipes);
 $('.filter-btn').click(findCheckedBoxes);
 $('main').click(selectCard);
 $(".my-pantry-btn").click(toggleMenu);
-$(".saved-recipes-btn").click(showSavedRecipes);
+$(".favorite-recipes-btn").click(showFavoriteRecipes);
 $(".show-pantry-recipes-btn").click(findCheckedPantryBoxes);
 $("#search").on('input', searchRecipes);
 
@@ -155,7 +155,7 @@ function selectCard(event) {
   let recipeCard = event.target.closest(".recipe-card")
   if (event.target.className === "card-apple-icon") {
     let cardId = parseInt(event.target.closest(".recipe-card").id)
-    domUpdates.changeAppleImageSrc(cardId, user, event)
+    domUpdates.changeHeartImageSrc(cardId, user, event)
   } else if (event.target.className === "card-mixer-icon") {
     let cardId = parseInt(event.target.closest(".recipe-card").id)
     domUpdates.changeMixerImageSrc(cardId, user, event)
@@ -178,7 +178,7 @@ function isDescendant(parent, child) {
   return false;
 }
 
-function showSavedRecipes() {
+function showFavoriteRecipes() {
   let unsavedRecipes = recipes.filter(recipe => {
     return !user.favoriteRecipes.includes(recipe.id);
   });

@@ -21,7 +21,7 @@ const domUpdates = {
           </div>
         </div>
         <h4>${recipeInfo.tags[0]}</h4>
-        <img src="../images/apple-logo-outline.png" alt="unfilled apple icon" class="card-apple-icon">
+        <img src="../images/heart-icon-outline-green.svg" alt="unfilled heart icon" class="card-apple-icon">
         <img src="../images/mixer-icon-outline.svg" alt="unfilled mixer icon" class="card-mixer-icon">
       </div>
     `)
@@ -54,12 +54,12 @@ const domUpdates = {
     $(recipe).hide()
   },
 
-  changeAppleImageSrc: (cardId, user, event) => {
+  changeHeartImageSrc: (cardId, user, event) => {
     if (!user.favoriteRecipes.includes(cardId)) {
-      $(event.target).attr('src', "../images/apple-logo.png")
-      user.saveRecipe(cardId);
+      $(event.target).attr('src', "../images/heart-icon.svg")
+      user.favoriteRecipe(cardId);
     } else {
-      $(event.target).attr('src', "../images/apple-logo-outline.png")
+      $(event.target).attr('src', "../images/heart-icon-outline-green.svg")
       user.removeRecipe(cardId);
     }
   },
