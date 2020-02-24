@@ -9,6 +9,8 @@ import './css/base.scss';
 
 // An example of how you tell webpack to use an image (also need to link to it in the index.html)
 import './images/apple-logo.png';
+import './images/mixer-icon-outline.svg';
+import './images/mixer-icon.svg';
 
 function fetchData() {
   let userData = fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData')

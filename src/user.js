@@ -15,7 +15,7 @@ class User {
     this.favoriteRecipes.splice(index, 1)
   }
 
-  removeFavoriteRecipe(recipe) {
+  removeRecipeToCook(recipe) {
     let i = this.favoriteRecipes.indexOf(recipe);
     this.favoriteRecipes.splice(i, 1);
   }

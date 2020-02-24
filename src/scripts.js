@@ -156,6 +156,9 @@ function selectCard(event) {
   if (event.target.className === "card-apple-icon") {
     let cardId = parseInt(event.target.closest(".recipe-card").id)
     domUpdates.changeAppleImageSrc(cardId, user, event)
+  } else if (event.target.className === "card-mixer-icon") {
+    let cardId = parseInt(event.target.closest(".recipe-card").id)
+    domUpdates.changeMixerImageSrc(cardId, user, event)
   } else if (event.target.id === "exit-recipe-btn") {
     exitRecipe(event);
   } else if (isDescendant(recipeCard, event.target)) {

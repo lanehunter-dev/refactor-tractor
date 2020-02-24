@@ -64,6 +64,17 @@ const domUpdates = {
     }
   },
 
+  changeMixerImageSrc: (cardId, user, event) => {
+    if (!user.recipesToCook.includes(cardId)) {
+      $(event.target).attr('src', "../images/mixer-icon.svg")
+      user.decideToCook(cardId);
+    } else {
+      $(event.target).attr('src', "../images/mixer-icon-outline.svg")
+      user.removeRecipeToCook(cardId);
+    }
+  },
+
+
   display: (recipe) => {
     $(recipe).css('display', 'block');
   },
