@@ -83,11 +83,17 @@ header {
 }
 
 .saved-ingredients-btn {
-  border-left: 3px solid $limeGreenBackground;
+  border-left: $navBorder;
 }
 
-.recipes-to-cook-btn {
-  border-right: 3px solid $limeGreenBackground;
+.recipes-to-cook-btn,
+.drop {
+  border-right: $navBorder;
+}
+
+.white {
+  border-right: none;
+  filter: invert(97%) sepia(85%) saturate(2%) hue-rotate(150deg) brightness(118%) contrast(100%);
 }
 
 .ing-pan-btn {

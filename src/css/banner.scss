@@ -4,7 +4,13 @@
   height: 150px;
   overflow: hidden;
   width: 100%;
+}
 
+.filter-drop {
+  float: left;
+  position: absolute;
+  align-items: center;
+  left: 50px;
 }
 
 .welcome-msg {
