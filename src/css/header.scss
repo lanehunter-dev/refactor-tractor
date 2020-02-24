@@ -71,7 +71,6 @@ header {
 
   &:hover {
     color: $limeGreenBackground;
-    font-size: 15px;
     text-shadow: 0px 2px 4px black;
     transition: .4s ease;
   }
@@ -83,7 +82,7 @@ header {
   }
 }
 
-.favorite-ingredients-btn {
+.saved-ingredients-btn {
   border-left: 3px solid $limeGreenBackground;
 }
 

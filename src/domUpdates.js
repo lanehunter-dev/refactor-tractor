@@ -74,19 +74,26 @@ const domUpdates = {
     }
   },
 
-
   display: (recipe) => {
     $(recipe).css('display', 'block');
   },
 
-  showRecipeBanner: () => {
+  showFavoriteRecipes: () => {
     $('.welcome-msg').hide();
+    $('.recipes-to-cook-banner').hide();
     $('.my-recipes-banner').css('display', 'block')
+  },
+
+  showRecipesToCook: () => {
+    $('.welcome-msg').hide();
+    $('.my-recipes-banner').hide();
+    $('.recipes-to-cook-banner').css('display', 'block')
   },
 
   showWelcomeBanner: () => {
     $('.welcome-msg').css('display', 'flex')
     $('.my-recipes-banner').hide()
+    $('.recipes-to-cook-banner').hide()
   },
 
   showRecipeInfo: (instructionsList) => {

@@ -23,6 +23,12 @@
   display: none;
 }
 
+.recipes-to-cook-banner {
+  @extend .welcome-msg;
+  margin-top: 25px;
+  display: none;
+}
+
 .show-all-btn {
   @extend .show-pantry-recipes-btn;
   height: 40px;

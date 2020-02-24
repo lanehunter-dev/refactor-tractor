@@ -10,6 +10,7 @@ import './css/base.scss';
 // An example of how you tell webpack to use an image (also need to link to it in the index.html)
 import './images/apple-logo.png';
 import './images/mixer-icon-outline.svg';
+import './images/mixer-icon-outline-white.svg';
 import './images/mixer-icon.svg';
 import './images/heart-icon.svg';
 import './images/heart-icon-outline.svg';
