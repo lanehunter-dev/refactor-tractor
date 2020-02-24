@@ -21,7 +21,8 @@ const domUpdates = {
           </div>
         </div>
         <h4>${recipeInfo.tags[0]}</h4>
-        <img src="../images/apple-logo-outline.png" alt="unfilled apple icon" class="card-apple-icon">
+        <img src="../images/heart-icon-outline-green.svg" alt="unfilled heart icon" class="card-apple-icon">
+        <img src="../images/mixer-icon-outline.svg" alt="unfilled mixer icon" class="card-mixer-icon">
       </div>
     `)
   },
@@ -53,13 +54,23 @@ const domUpdates = {
     $(recipe).hide()
   },
 
-  changeAppleImageSrc: (cardId, user, event) => {
+  changeHeartImageSrc: (cardId, user, event) => {
     if (!user.favoriteRecipes.includes(cardId)) {
-      $(event.target).attr('src', "../images/apple-logo.png")
-      user.saveRecipe(cardId);
+      $(event.target).attr('src', "../images/heart-icon.svg")
+      user.favoriteRecipe(cardId);
     } else {
-      $(event.target).attr('src', "../images/apple-logo-outline.png")
+      $(event.target).attr('src', "../images/heart-icon-outline-green.svg")
       user.removeRecipe(cardId);
+    }
+  },
+
+  changeMixerImageSrc: (cardId, user, event) => {
+    if (!user.recipesToCook.includes(cardId)) {
+      $(event.target).attr('src', "../images/mixer-icon.svg")
+      user.decideToCook(cardId);
+    } else {
+      $(event.target).attr('src', "../images/mixer-icon-outline.svg")
+      user.removeRecipeToCook(cardId);
     }
   },
 
@@ -67,14 +78,22 @@ const domUpdates = {
     $(recipe).css('display', 'block');
   },
 
-  showRecipeBanner: () => {
+  showFavoriteRecipes: () => {
     $('.welcome-msg').hide();
+    $('.recipes-to-cook-banner').hide();
     $('.my-recipes-banner').css('display', 'block')
+  },
+
+  showRecipesToCook: () => {
+    $('.welcome-msg').hide();
+    $('.my-recipes-banner').hide();
+    $('.recipes-to-cook-banner').css('display', 'block')
   },
 
   showWelcomeBanner: () => {
     $('.welcome-msg').css('display', 'flex')
     $('.my-recipes-banner').hide()
+    $('.recipes-to-cook-banner').hide()
   },
 
   showRecipeInfo: (instructionsList) => {

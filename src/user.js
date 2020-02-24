@@ -6,7 +6,7 @@ class User {
     this.favoriteRecipes = [];
     this.recipesToCook = [];
   }
-  saveRecipe(recipe) {
+  favoriteRecipe(recipe) {
     this.favoriteRecipes.push(recipe);
   }
 
@@ -15,17 +15,19 @@ class User {
     this.favoriteRecipes.splice(index, 1)
   }
 
-  removeFavoriteRecipe(recipe) {
-    let i = this.favoriteRecipes.indexOf(recipe);
-    this.favoriteRecipes.splice(i, 1);
+  removeRecipeToCook(recipe) {
+    let index = this.recipesToCook.indexOf(recipe);
+    this.recipesToCook.splice(index, 1);
   }
 
   decideToCook(recipe) {
     this.recipesToCook.push(recipe);
   }
+
   filterFavoriteRecipes(type) {
     return this.favoriteRecipes.filter(recipe => recipe.type.includes(type));
   }
+
   searchForFavoriteRecipes(keyword) {
     return this.favoriteRecipes.filter(recipe => recipe.name.includes(keyword) ||
     recipe.ingredients.includes(keyword));

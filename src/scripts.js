@@ -75,7 +75,8 @@ $('.show-all-btn').click(showAllRecipes);
 $('.filter-btn').click(findCheckedBoxes);
 $('main').click(selectCard);
 $(".my-pantry-btn").click(toggleMenu);
-$(".saved-recipes-btn").click(showSavedRecipes);
+$(".favorite-recipes-btn").click(showFavoriteRecipes);
+$(".recipes-to-cook-btn").click(showRecipesToCook);
 $(".show-pantry-recipes-btn").click(findCheckedPantryBoxes);
 $("#search").on('input', searchRecipes);
 
@@ -150,12 +151,15 @@ function filterRecipes(filtered) {
 }
 
 
-// FAVORITE AND RECIPE CARD FUNCTIONALITY
+// OPEN RECIPE CARD FUNCTIONALITY
 function selectCard(event) {
   let recipeCard = event.target.closest(".recipe-card")
   if (event.target.className === "card-apple-icon") {
     let cardId = parseInt(event.target.closest(".recipe-card").id)
-    domUpdates.changeAppleImageSrc(cardId, user, event)
+    domUpdates.changeHeartImageSrc(cardId, user, event)
+  } else if (event.target.className === "card-mixer-icon") {
+    let cardId = parseInt(event.target.closest(".recipe-card").id)
+    domUpdates.changeMixerImageSrc(cardId, user, event)
   } else if (event.target.id === "exit-recipe-btn") {
     exitRecipe(event);
   } else if (isDescendant(recipeCard, event.target)) {
@@ -175,7 +179,9 @@ function isDescendant(parent, child) {
   return false;
 }
 
-function showSavedRecipes() {
+// FAVORITE RECIPES AND RECIPES TO COOK FUNCTIONALITY
+function showFavoriteRecipes() {
+  showAllRecipes()
   let unsavedRecipes = recipes.filter(recipe => {
     return !user.favoriteRecipes.includes(recipe.id);
   });
@@ -183,7 +189,19 @@ function showSavedRecipes() {
     let domRecipe = document.getElementById(`${recipe.id}`);
     domUpdates.hide(domRecipe)
   });
-  domUpdates.showRecipeBanner()
+  domUpdates.showFavoriteRecipes()
+}
+
+function showRecipesToCook() {
+  showAllRecipes()
+  let unsavedRecipes = recipes.filter(recipe => {
+    return !user.recipesToCook.includes(recipe.id);
+  });
+  unsavedRecipes.forEach(recipe => {
+    let domRecipe = document.getElementById(`${recipe.id}`);
+    domUpdates.hide(domRecipe)
+  });
+  domUpdates.showRecipesToCook()
 }
 
 // CREATE RECIPE INSTRUCTIONS
