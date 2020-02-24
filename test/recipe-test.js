@@ -3,14 +3,17 @@ import { expect } from 'chai';
 
 import Recipe from '../src/recipe';
 import recipeData from '../src/data/recipe-data';
+import ingredientsData from '../src/data/ingredient-data';
 
-  describe('Recipe', function() {
+describe('Recipe', function() {
   let recipe;
   let recipeInfo;
+  let ingredients
 
   beforeEach(function() {
     recipeInfo = recipeData[0];
     recipe = new Recipe(recipeInfo);
+    ingredients = ingredientsData
   })
 
   it('is a function', function() {
@@ -46,6 +49,6 @@ import recipeData from '../src/data/recipe-data';
   });
 
   it('should calculate the total cost of all of the ingredients', function() {
-    expect(recipe.calculateIngredientsCost()).to.eq();
+    expect(recipe.calculateIngredientsCost(recipe, ingredients)).to.equal(7319);
   });
 });

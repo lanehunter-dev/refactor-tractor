@@ -7,10 +7,19 @@ class Recipe {
     this.ingredients = recipe.ingredients;
   }
 
-  calculateIngredientsCost() {
-    // return this.ingredients.map(i => {
-    //   ingredientData.find(ingredient => ingredient === i);
-    // });
+  calculateIngredientsCost(recipe, ingredientsData) {
+    let recipeItems = recipe.ingredients.map(ingredient => {
+      return {
+        name: ingredient.name,
+        id: ingredient.id,
+        amount: ingredient.quantity.amount
+      }
+    })
+    return recipeItems.reduce((acc, item) => {
+      let itemCost = ingredientsData.find(el => el.id === item.id).estimatedCostInCents;
+      acc += itemCost * item.amount
+      return acc
+    }, 0)
   }
 }
 
