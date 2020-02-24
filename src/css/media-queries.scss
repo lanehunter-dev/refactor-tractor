@@ -1,0 +1,29 @@
+@media screen and (max-width: 1250px) {
+  .filter-type-drop {
+    margin-left: 40%;
+  }
+  .drop-menu {
+    margin-left: 70%;
+  }
+}
+
+@media screen and (max-width: 950px) {
+  .logo {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 750px) {
+  header {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .filter-type-drop {
+    top: 10%;
+    margin-left: 0%;
+  }
+  .drop-menu {
+    top: 12%;
+    margin-left: 50%;
+  }
+}
