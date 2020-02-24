@@ -14,7 +14,6 @@ describe('Pantry', function() {
   let ingredients;
 
   beforeEach(function() {
-    ingredients = ingredientsData;
     user = new User(users[0]);
     pantry = new Pantry(users[0].pantry);
     recipe = new Recipe(recipeData[0]);
@@ -41,6 +40,19 @@ describe('Pantry', function() {
     expect(pantry.checkStockForRecipe(recipe)).to.equal(false)
   })
 
+  it('should be able to return array of ingredients', function() {
+    recipe = new Recipe(recipeData[1]);
+    expect(pantry.findNeededIngredients(recipe).length).to.deep.equal(1)
+  })
 
+  it('should be able to find difference in ingredients', function() {
+    recipe = new Recipe(recipeData[1]);
+    expect(pantry.findNeededIngredients(recipe)[0]).to.equal('You need 1 more blackberry juice')
+  })
+
+  it('should be able to find cost', function() {
+    recipe = new Recipe(recipeData[1]);
+    expect(pantry.getCostOfNeededItems(recipe, ingredientsData)).to.equal(256)
+  })
 
 })
