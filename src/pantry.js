@@ -112,7 +112,57 @@ class Pantry {
       return acc
     }, 0)
   }
+
+  addIngredientsToInventory(recipe, user) {
+    let recipeItems = recipe.ingredients.map(ingredient => {
+      return {
+        name: ingredient.name,
+        id: ingredient.id,
+        amount: ingredient.quantity.amount
+      }
+    })
+    let pantryIds = this.inventory.map(ingredient => {
+      return ingredient.ingredient
+    })
+    let subtractedData = recipeItems.reduce((acc, recipeItem) => {
+      if (!pantryIds.includes(recipeItem.id)) {
+        acc.push({
+          userID: user.id,
+          ingredientID: recipeItem.id,
+          ingredientModification: parseInt(`-${recipeItem.amount}`)
+        })
+      }
+      this.inventory.forEach(ingredient => {
+        if (recipeItem.id === ingredient.ingredient) {
+          acc.push({
+            userID: user.id,
+            ingredientID: recipeItem.id,
+            ingredientModification: Math.abs(ingredient.amount - recipeItem.amount),
+          });
+        }
+      })
+      return acc
+    }, [])
+
+    subtractedData.forEach(dataObj => {
+      if (dataObj.ingredientModification < 0) {
+        dataObj.ingredientModification = Math.abs(dataObj.ingredientModification)
+        fetch('https://fe-apps.herokuapp.com/api/v1/whats-cookin/1911/users/wcUsersData', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(dataObj),
+        })
+          .then(response => response.json())
+          .then(response => console.log(response))
+          .then(data => console.log(data))
+          .catch(error => console.log(error.message))
+      }
+    })
+  }
 }
+
 
 
 

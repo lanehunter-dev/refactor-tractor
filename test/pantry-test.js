@@ -55,4 +55,8 @@ describe('Pantry', function() {
     expect(pantry.getCostOfNeededItems(recipe, ingredientsData)).to.equal(256)
   })
 
+  it('should be able to add ingredients to the pantry', function() {
+    recipe = new Recipe(recipeData[1]);
+    expect(pantry.addIngredientsToInventory(recipe, user)).to.equal(1)
+  })
 })

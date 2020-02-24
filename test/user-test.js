@@ -40,7 +40,7 @@ describe('User', function() {
   });
 
   it('should be able to save a recipe to favoriteRecipes', function() {
-    user.saveRecipe(recipe);
+    user.favoriteRecipe(recipe);
     expect(user.favoriteRecipes[0].name).to.equal('Chicken Parm');
   });
 
