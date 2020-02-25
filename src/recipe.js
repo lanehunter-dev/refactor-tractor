@@ -4,6 +4,7 @@ class Recipe {
     this.name = recipe.name;
     this.image = recipe.image;
     this.tags = recipe.tags;
+    this.instructions = recipe.instructions;
     this.ingredients = recipe.ingredients;
   }
 
@@ -20,6 +21,10 @@ class Recipe {
       acc += itemCost * item.amount
       return acc
     }, 0)
+  }
+
+  getInstructions() {
+    return this.instructions.map(i => i.instruction);
   }
 }
 

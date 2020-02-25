@@ -223,22 +223,21 @@ function showRecipesToCook() {
 
 // CREATE RECIPE INSTRUCTIONS
 function openRecipeInfo(recipeId) {
-  domUpdates.display('.recipe-instructions')
   let recipe = recipeData.find(recipe => recipe.id === Number(recipeId));
   currentRecipe = new Recipe(recipe)
   let ingredients = recipe.ingredients.map(recipeIngredient => {
     return ingredientsData.find(item => item.id === recipeIngredient.id).name
   })
+
+  domUpdates.display('.recipe-instructions')
   domUpdates.makeRecipeTitle(recipe, ingredients);
   domUpdates.addRecipeImage(recipe);
-  generateInstructions(recipe);
+  generateInstructions();
 }
 
-function generateInstructions(recipe) {
+function generateInstructions() {
   let instructionsList = "";
-  let instructions = recipe.instructions.map(i => {
-    return i.instruction
-  });
+  let instructions = currentRecipe.getInstructions();
   instructions.forEach(i => {
     instructionsList += `<li>${i}</li>`
   });
