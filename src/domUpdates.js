@@ -77,16 +77,26 @@ const domUpdates = {
     $(recipe).css('display', 'block');
   },
 
+  emptyPageErrorMsg: (type) => {
+    $('.error-msg').html('');
+    if($('.welcome-msg').text().includes(`${type}`)){
+      return null;
+    }
+    $('.welcome-msg').append(`<p class="error-msg">Please ${type} a recipe first </p>`)
+  },
+
   showFavoriteRecipes: () => {
+    $('.error-msg').html('');
     $('.welcome-msg').hide();
     $('.recipes-to-cook-banner').hide();
-    $('.my-recipes-banner').css('display', 'block')
+    $('.my-recipes-banner').css('display', 'flex')
   },
 
   showRecipesToCook: () => {
+    $('.error-msg').html('');
     $('.welcome-msg').hide();
     $('.my-recipes-banner').hide();
-    $('.recipes-to-cook-banner').css('display', 'block')
+    $('.recipes-to-cook-banner').css('display', 'flex')
   },
 
   showWelcomeBanner: () => {

@@ -202,6 +202,9 @@ function showFavoriteRecipes() {
   let unsavedRecipes = recipes.filter(recipe => {
     return !user.favoriteRecipes.includes(recipe.id);
   });
+  if(unsavedRecipes.length === recipes.length){
+    return domUpdates.emptyPageErrorMsg('favorite');
+  }
   unsavedRecipes.forEach(recipe => {
     let domRecipe = document.getElementById(`${recipe.id}`);
     domUpdates.hide(domRecipe)
@@ -214,6 +217,9 @@ function showRecipesToCook() {
   let unsavedRecipes = recipes.filter(recipe => {
     return !user.recipesToCook.includes(recipe.id);
   });
+  if(unsavedRecipes.length === recipes.length){
+    return domUpdates.emptyPageErrorMsg('click the mixer on');
+  }
   unsavedRecipes.forEach(recipe => {
     let domRecipe = document.getElementById(`${recipe.id}`);
     domUpdates.hide(domRecipe)
