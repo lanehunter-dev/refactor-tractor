@@ -27,12 +27,18 @@
   @extend .welcome-msg;
   margin-top: 25px;
   display: none;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
 }
 
 .recipes-to-cook-banner {
   @extend .welcome-msg;
   margin-top: 25px;
   display: none;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
 }
 
 .show-all-btn {
@@ -40,4 +46,11 @@
   height: 40px;
   margin-top: 20px;
   width: 200px;
+}
+
+.error-msg {
+  color: red;
+  font-size: 25px;
+  position: absolute;
+  right: 1%;
 }
