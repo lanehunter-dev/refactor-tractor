@@ -14,6 +14,7 @@ import './images/seasoning.png'
 import User from './user';
 import Recipe from './recipe';
 import fetchData from './index'
+import Pantry from './pantry'
 
 let userData;
 let recipeData;
@@ -59,6 +60,7 @@ fetchData().then(data => {
 
 function generateUser(data) {
   user = new User(data[Math.floor(Math.random() * data.length)]);
+  pantry = new Pantry(user.pantry)
   let firstName = user.name.split(" ")[0];
   domUpdates.welcomeMessage(firstName);
   findPantryInfo(data);
@@ -72,6 +74,8 @@ let recipes = [];
 let fullRecipeInfo = document.querySelector(".recipe-instructions");
 let searchInput = document.querySelector("#search-input");
 let user;
+let pantry;
+let currentRecipe;
 
 $('.show-all-btn').click(showAllRecipes);
 $('.filter-btn').click(findCheckedBoxes);
@@ -82,8 +86,17 @@ $(".favorite-recipes-btn").click(showFavoriteRecipes);
 $(".recipes-to-cook-btn").click(showRecipesToCook);
 $(".show-pantry-recipes-btn").click(findCheckedPantryBoxes);
 $("#search").on('input', searchRecipes);
+$(document).on('click', '.add-ingredients', addIngredientsToPantry);
+// $('.make-recipe').click(makeRecipe);
+
 
 // CREATE RECIPE CARDS
+function addIngredientsToPantry() {
+  pantry.addIngredientsToInventory(currentRecipe, user);
+  findPantryInfo()
+}
+
+
 function createCards(data) {
   data.forEach(recipe => {
     let recipeInfo = new Recipe(recipe);
@@ -96,10 +109,6 @@ function createCards(data) {
   });
 }
 
-//Aria butotn functions
-function ariaHeartChange(event) {
-  
-}
 
 // FILTER BY RECIPE TAGS
 function findTags(data) {
@@ -216,6 +225,7 @@ function showRecipesToCook() {
 function openRecipeInfo(recipeId) {
   domUpdates.display('.recipe-instructions')
   let recipe = recipeData.find(recipe => recipe.id === Number(recipeId));
+  currentRecipe = new Recipe(recipe)
   let ingredients = recipe.ingredients.map(recipeIngredient => {
     return ingredientsData.find(item => item.id === recipeIngredient.id).name
   })
@@ -278,11 +288,10 @@ function hideUnselectedRecipes(foundRecipes) {
 }
 
 function toggleMenu(e) {
-  console.log(e.target)
-  if(e.target.classList.contains("my-pantry-btn") || e.target.parentNode.classList.contains("my-pantry-btn")){
+  if (e.target.classList.contains("my-pantry-btn") || e.target.parentNode.classList.contains("my-pantry-btn")) {
     pantryMenuOpen ? domUpdates.hide(".drop-menu") : domUpdates.display(".drop-menu");
     pantryMenuOpen = !pantryMenuOpen
-  } else if(e.target.classList.contains("drop") || e.target.parentNode.classList.contains("drop")) {
+  } else if (e.target.classList.contains("drop") || e.target.parentNode.classList.contains("drop")) {
     typeMenuOpen ? domUpdates.hide(".filter-type-drop") : domUpdates.display(".filter-type-drop");
     typeMenuOpen = !typeMenuOpen;
   }

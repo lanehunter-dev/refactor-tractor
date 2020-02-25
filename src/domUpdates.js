@@ -97,7 +97,11 @@ const domUpdates = {
 
   showRecipeInfo: (instructionsList) => {
     $(".recipe-instructions").prepend("<h5>Instructions</h5>")
-    $(".recipe-instructions").append(`<ol>${instructionsList}</ol>`)
+    $(".recipe-instructions").append(`<ol class="instruction-list">${instructionsList}</ol>`)
+    $(".instruction-list").append(`<div class="card-btn-container">
+    <button class="card-buttons make-recipe">Make Recipe</button>
+    <button class="card-buttons add-ingredients">Add Needed Ingredients</button>
+    </div>`)
   },
 
   addRecipeImage: (recipe) => {

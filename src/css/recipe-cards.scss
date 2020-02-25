@@ -138,3 +138,13 @@
   width:100%;
   z-index:100;
 }
+
+.card-btn-container {
+  @include flex-center-align();
+  justify-content: space-around;
+}
+
+.card-buttons {
+  @extend .show-pantry-recipes-btn;
+  margin-top: 2em;
+}
