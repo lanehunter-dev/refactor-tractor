@@ -23,17 +23,10 @@
   }
 }
 
-.my-recipes-banner {
-  @extend .welcome-msg;
-  margin-top: 25px;
-  display: none;
-  align-items: center;
-  flex-direction: column;
-  height: 100%;
-}
-
+.my-recipes-banner,
 .recipes-to-cook-banner {
-  @extend .welcome-msg;
+  text-align: center;
+  width: 95%;
   margin-top: 25px;
   display: none;
   align-items: center;
