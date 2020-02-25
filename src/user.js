@@ -5,10 +5,11 @@ class User {
     this.pantry = user.pantry;
     this.favoriteRecipes = [];
     this.recipesToCook = [];
-    //need to set these back to null 
+    //need to set these back to null  when my recipes is clicked again
     this.filteredFavorites = null;
     this.searchedRecipes = null;
   }
+
   favoriteRecipe(recipe) {
     this.favoriteRecipes.push(recipe);
   }
