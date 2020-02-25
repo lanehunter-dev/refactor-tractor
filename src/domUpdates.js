@@ -80,13 +80,13 @@ const domUpdates = {
   showFavoriteRecipes: () => {
     $('.welcome-msg').hide();
     $('.recipes-to-cook-banner').hide();
-    $('.my-recipes-banner').css('display', 'block')
+    $('.my-recipes-banner').css('display', 'flex')
   },
 
   showRecipesToCook: () => {
     $('.welcome-msg').hide();
     $('.my-recipes-banner').hide();
-    $('.recipes-to-cook-banner').css('display', 'block')
+    $('.recipes-to-cook-banner').css('display', 'flex')
   },
 
   showWelcomeBanner: () => {

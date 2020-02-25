@@ -112,3 +112,10 @@ header {
   margin-top: 10px;
   padding: 5px 10px 5px 10px;
 }
+
+.my-recipes-banner,
+.recipes-to-cook-banner {
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+}
