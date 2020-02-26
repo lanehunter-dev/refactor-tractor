@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Fresh Picks</title>
+    <link href="https://fonts.googleapis.com/css?family=Quicksand:400,600,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Sulphur+Point:400,700&display=swap" rel="stylesheet">
+    <link rel="icon" href="./images/apple-logo.png" />
+  </head>
+  <body>
+    <header>
+      <h1><span>fresh</span>Picks<img src="images/apple-logo.png" alt="apple icon" class="header-apple-icon"></h1>
+      <form for="search" id="search" role="search">
+        <input aria-label="search-input" id="search-input" type="text" autocomplete="off" placeholder="Search Recipes..."></input>
+        <label for="search" class="search-label">Search</label>
+        <button class="nav-btn search-btn" type="button" name="button"><img src="../images/search.png" alt="search button"></button>
+      </form>
+      <button class="nav-btn ing-pan-btn drop" type="button" name="button"><img src="../images/filter.svg" alt="filter recipes by type button" class="white">Filter By Type</button>
+      <button class="nav-btn ing-pan-btn recipes-to-cook-btn" type="button" name="button"><img src="../images/mixer-icon-outline-white.svg" alt="recipes to cook button">Recipes To Cook</button>
+      <button class="nav-btn ing-pan-btn favorite-recipes-btn" type="button" name="button"><img src="../images/heart-icon-outline.svg" alt="favorites button">Favorite Recipes</button>
+      <button class="nav-btn my-pantry-btn ing-pan-btn saved-ingredients-btn" type="button" name="button"><img src="../images/seasoning.png" alt="my pantry button">My Pantry</button>
+    </header>
+    <section class="banner-image">
+      <div class="my-recipes-banner">
+        <h2>My Favorite Recipes</h2>
+        <button class="show-all-btn">Show All Recipes</button>
+      </div>
+      <div class="recipes-to-cook-banner">
+        <h2>Recipes To Cook</h2>
+        <button class="show-all-btn">Show All Recipes</button>
+      </div>
+    </section>
+    <section class="filter-type-drop">
+      <div class="wrap">
+        <h3>Recipe Type</h3>
+        <ul class="tag-list">
+        </ul>
+        <button class="filter-btn">Filter Recipes</button>
+      </div>
+    </section>
+    <div class="drop-menu">
+      <h2>My Pantry</h2>
+      <button class="show-pantry-recipes-btn">What Can I Make?</button>
+      <ul class="pantry-list"></ul>
+    </div>
+    <main>
+      <div class="recipe-instructions">
+      </div>
+    </main>
+  <script type="text/javascript" src="main.bundle.js"></script></body>
+</html>
